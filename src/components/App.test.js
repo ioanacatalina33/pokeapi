@@ -4,6 +4,6 @@ import App from "./App";
 
 test("renders learn react link", () => {
   render(<App />);
-  const title = screen.getByText(/Pokemon Api/i);
+  const title = screen.getByText(/PokemonApi/i);
   expect(title).toBeInTheDocument();
 });

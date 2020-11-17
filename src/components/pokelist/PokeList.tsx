@@ -1,7 +1,9 @@
 import React from "react";
+import Content from "../common/Content";
+import styled from "styled-components";
 
-function PokeList() {
-  return <div>Pokemons in Generation I</div>;
-}
+const PokeList = () => {
+  return <Content>Pokemons in Generation I</Content>;
+};
 
 export default PokeList;

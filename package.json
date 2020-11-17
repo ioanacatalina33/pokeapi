@@ -50,6 +50,15 @@
       "git add"
     ]
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -63,6 +72,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/plugin-transform-react-jsx": "^7.12.5",
+    "@babel/plugin-transform-react-jsx-self": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
     "@typescript-eslint/parser": "^4.8.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint": "^7.13.0",

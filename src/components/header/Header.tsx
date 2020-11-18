@@ -1,12 +1,15 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {device, colors} from "../../utils/CssUtils";
 
 const Header = () => {
   return (
     <Title>
-      <TitleText>PokemonAPI</TitleText>
-      <PikachuImg src="./img/pikachu.png" />
+      <TitleText>
+        <StyledLink to="/">PokemonAPI</StyledLink>
+      </TitleText>
+      <PikachuImg src="/img/pikachu.png" />
     </Title>
   );
 };
@@ -39,6 +42,13 @@ const PikachuImg = styled.img`
     max-width: 300px;
     max-height: 300px;
   }
+`;
+
+const StyledLink = styled(Link)`
+  color: ${colors.primary};
+  -webkit-text-stroke-color: ${colors.secondary};
+  -webkit-text-stroke-width: 1px;
+  text-decoration: none;
 `;
 
 const TitleText = styled.h1`

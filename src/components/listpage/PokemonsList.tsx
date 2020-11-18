@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import PokemonPreview from "../../model/PokemonPreview";
-import {addFlexbox, addFlexProperties, addFlexWrap, device} from "../../utils/CssUtils";
+import {PokemonPreview} from "../../model";
+import {addFlexProperties, device} from "../../utils/CssUtils";
+import FlexDiv from "../common/FlexDiv";
 import PokemonCard from "./PokeCard";
 
 interface PokemonsListProps {
@@ -32,11 +33,6 @@ const PokemonsList = ({pokemonCards}: PokemonsListProps) => {
 };
 
 export default PokemonsList;
-
-const FlexDiv = styled.div`
-  width: 100%;
-  ${addFlexbox()}${addFlexWrap("wrap")}
-`;
 
 const FlexEmptyElement = styled.div`
   ${addFlexProperties("1 0 41%")}

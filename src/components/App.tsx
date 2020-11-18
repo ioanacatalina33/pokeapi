@@ -10,20 +10,19 @@ import PokeProfile from "./profile";
 function App() {
   return (
     <div>
-      <BrowserRouter>
-        <Header />
-        <Switch>
-          <Route exact path={PATH_LIST}>
-            <ListPage />
-          </Route>
-          <Route exact path={PATH_PROFILE + "/:" + PATH_PROFILE_NAME}>
-            <PokeProfile />
-          </Route>
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch>
-      </BrowserRouter>
+      <Header />
+      <Switch>
+        <Route exact path={PATH_LIST}>
+          <ListPage />
+        </Route>
+        <Route exact path={PATH_PROFILE + "/:" + PATH_PROFILE_NAME}>
+          <PokeProfile />
+        </Route>
+        <Route>
+          <NotFound />
+        </Route>
+      </Switch>
+
       <Footer />
     </div>
   );

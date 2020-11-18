@@ -1,5 +1,6 @@
 import React from "react";
+import Content from "../common/Content";
 
-const NotFound = () => <div>Page not found! :(</div>;
+const NotFound = () => <Content>Page not found! :(</Content>;
 
 export default NotFound;

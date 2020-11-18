@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import PokemonPreview from "../../model/PokemonPreview";
+import {PokemonPreview} from "../../model";
 import {PATH_PROFILE} from "../../utils/Constants";
 import {
   addColorTransparency,
@@ -52,7 +52,6 @@ const CardDiv = styled.div`
 `;
 
 const PokeImg = styled.img`
-  ${addDefaultTransition()}
   max-width: 85%;
   max-height: 100%;
   padding: 4px;
@@ -65,8 +64,5 @@ const CardName = styled.div`
   background-color: ${addColorTransparency(colors.secondary, 40)};
   ${CardDiv}:hover & {
     background-color: ${addColorTransparency(colors.primary, 90)};
-  }
-  &:link {
-    text-decoration: none !important;
   }
 `;

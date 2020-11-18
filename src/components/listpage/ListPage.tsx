@@ -12,7 +12,7 @@ const ListPage = () => {
 
   return (
     <Content>
-      <Subtitle titleText="Generation I Pokemons" />
+      <Subtitle titleText="1st Generation Pokemons" />
       <SearchBar onSearchQuery={onSearchQuery} />
       <PokemonsList pokemonCards={mockPokemonCards} />
     </Content>

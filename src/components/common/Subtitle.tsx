@@ -8,13 +8,12 @@ const Subtitle = ({titleText}: {titleText: string}) => {
 
 export default Subtitle;
 
-const H2 = styled.div`
-  display: table;
+const H2 = styled.h2`
   padding: 0;
   margin: 0 auto;
-  font-size: 1.5rem;
-
+  font-size: 1.6rem;
+  text-align: center;
   @media screen and ${device.md} {
-    padding: 2rem 1rem 0rem 1rem;
+    font-size: 1.5rem;
   }
 `;

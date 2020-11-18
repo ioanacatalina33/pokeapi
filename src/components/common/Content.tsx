@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import {device, colors} from "../../utils/CssUtils";
 
-interface MyProps {
+interface ContentProps {
   children?: React.ReactNode;
 }
 
-const Content = (props: MyProps) => {
+const Content = (props: ContentProps) => {
   return <ContentDiv>{props.children}</ContentDiv>;
 };
 

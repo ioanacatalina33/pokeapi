@@ -47,10 +47,10 @@ const TitleText = styled.h1`
   font-family: "Pokemon Solid", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", sans-serif;
   letter-spacing: 5px;
-  color: ${colors.primaryLight};
-  -webkit-text-stroke-color: ${colors.pokemonShadow};
+  color: ${colors.primary};
+  -webkit-text-stroke-color: ${colors.secondary};
   -webkit-text-stroke-width: 1px;
-  text-shadow: -4px 4px 0px ${colors.pokemonShadow};
+  text-shadow: -4px 4px 0px ${colors.secondary};
   display: block;
   vertical-align: middle;
   padding-bottom: 0rem;

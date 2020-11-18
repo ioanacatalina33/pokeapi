@@ -1,12 +1,12 @@
 import {createGlobalStyle} from "styled-components";
-import {device, colors, sizes} from "./utils/CssUtils";
+import {colors, sizes} from "./utils/CssUtils";
 import img from "./img/bgimg.jpg";
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    font: ${colors.colorText};
+    color: ${colors.colorText};
     font-size: ${sizes.fontSize};
     background-image: url(${img});
     background-repeat: no-repeat;
@@ -20,7 +20,8 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
      margin-bottom: 0px;
   }
-
+  
+}
 
 `;
 

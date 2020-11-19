@@ -3,8 +3,14 @@ import Content from "../common/Content";
 import SearchBar from "./SearchBar";
 import PokemonsList from "./PokemonsList";
 import Subtitle from "../common/Subtitle";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store";
 
 const ListPage = () => {
+  const {pokemons, isPokeDataLoading, isPokeDataError} = useSelector(
+    (state: RootState) => state.pokemonData
+  );
+
   function onSearchQuery(query: string) {
     //TODO: search in the list
     console.log("TODO: search for query " + query);
@@ -14,7 +20,9 @@ const ListPage = () => {
     <Content>
       <Subtitle titleText="1st Generation Pokemons" />
       <SearchBar onSearchQuery={onSearchQuery} />
-      <PokemonsList pokemonCards={mockPokemonCards} />
+      <PokemonsList pokemonCards={pokemons} />
+      {isPokeDataLoading && <span>Loading...</span>}
+      {isPokeDataError && <span>Could not load all pokemons :(</span>}
     </Content>
   );
 };
@@ -23,45 +31,45 @@ export default ListPage;
 
 const mockPokemonCards = [
   {
-    id: 1,
+    isLoading: false,
     name: "Poke1",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
   {
-    id: 2,
+    isLoading: false,
     name: "Poke2",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
   {
-    id: 3,
+    isLoading: false,
     name: "Poke3",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
   {
-    id: 4,
+    isLoading: false,
     name: "Poke4",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
   {
-    id: 5,
+    isLoading: false,
     name: "Poke5",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
   {
-    id: 6,
+    isLoading: false,
     name: "Poke6",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
   {
-    id: 7,
+    isLoading: false,
     name: "Poke7",
-    img:
+    profilePic:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
   },
 ];

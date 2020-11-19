@@ -1,20 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-import PokemonSprites from "../../model/PokemonSprites";
-import {
-  addDefaultTransition,
-  addFlexProperties,
-  addTransform,
-  colors,
-  device,
-} from "../../utils/CssUtils";
+import {PokemonSprites} from "../../store/pokemondata/types";
 import CategoryTitle from "../common/CategoryTitle";
 
 const ContentPhotos = ({photos}: {photos: PokemonSprites}) => {
   let photoType: keyof typeof photos;
   let imgElements = [];
   for (photoType in photos) {
-    if (photos[photoType] && photoType !== "front_default")
+    if (photos[photoType])
       imgElements.push(
         <img
           src={photos[photoType]}

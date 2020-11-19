@@ -13,8 +13,8 @@ const Content = (props: ContentProps) => {
 export default Content;
 
 const ContentDiv = styled.div`
-  height: 1200px;
   max-width: 800px;
+  min-height: 600px;
   margin: 0 auto;
   border: 1px solid rgb(0, 0, 0, 0.4);
   border-radius: 0px;

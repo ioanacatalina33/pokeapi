@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import {PokemonPreview} from "../../model";
+import {PokemonData} from "../../store/pokemondata/types";
 import {addFlexProperties, device} from "../../utils/CssUtils";
 import FlexDiv from "../common/FlexDiv";
 import PokemonCard from "./PokeCard";
 
 interface PokemonsListProps {
-  pokemonCards: PokemonPreview[];
+  pokemonCards: PokemonData[];
 }
 
 const PokemonsList = ({pokemonCards}: PokemonsListProps) => {
@@ -23,7 +23,7 @@ const PokemonsList = ({pokemonCards}: PokemonsListProps) => {
   return (
     <FlexDiv>
       {pokemonCards.map((card) => (
-        <PokemonCard key={card.id} card={card} />
+        <PokemonCard key={card.name} card={card} />
       ))}
       {generateEmptyCards().map((card) => (
         <FlexEmptyElement key={card.name} />

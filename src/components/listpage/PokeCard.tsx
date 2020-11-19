@@ -1,7 +1,6 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import {PokemonPreview} from "../../model";
 import {PATH_PROFILE} from "../../utils/Constants";
 import {
   addColorTransparency,
@@ -13,7 +12,7 @@ import {
 } from "../../utils/CssUtils";
 
 interface PokemonCardProps {
-  card: PokemonPreview;
+  card: {name: string; profilePic?: string; isLoading: boolean};
 }
 
 const PokemonCard = ({card}: PokemonCardProps) => {
@@ -23,7 +22,7 @@ const PokemonCard = ({card}: PokemonCardProps) => {
         style={{textDecoration: "none", color: colors.colorText}}
         to={PATH_PROFILE + "/" + card.name}
       >
-        <PokeImg src={card.img} alt={card.name} />
+        <PokeImg src={card.profilePic} alt={card.name} />
         <CardName>{card.name}</CardName>
       </Link>
     </CardDiv>

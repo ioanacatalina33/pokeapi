@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import {addFlexProperties, alignItems, device} from "../../utils/CssUtils";
+import {addFlexProperties, device} from "../../utils/CssUtils";
 import Content from "../common/Content";
 import FlexDiv from "../common/FlexDiv";
 import Subtitle from "../common/Subtitle";
@@ -35,6 +35,10 @@ function PokeProfile() {
       details: item.details,
     };
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <Content>

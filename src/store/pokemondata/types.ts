@@ -8,7 +8,7 @@ export const ONE_POKEMON_FETCHED = "ONE_POKE_FETCHED";
 export const ONE_POKEMON_FETCH_ERROR = "ONE_POKE_FETCH_ERROR";
 
 export interface PokemonState {
-  pokemons: PokemonData[];
+  pokemons: {[key: string]: PokemonData};
   isPokeDataLoading: boolean;
   isPokeDataError: boolean;
 }
@@ -51,7 +51,7 @@ export interface OnePokemonFetchingAction {
 
 export interface PokemonsFetchedAction {
   type: typeof POKEMONS_FETCHED;
-  payload: PokemonData[];
+  payload: {[key: string]: PokemonData};
 }
 
 export interface OnePokemonFetchedAction {

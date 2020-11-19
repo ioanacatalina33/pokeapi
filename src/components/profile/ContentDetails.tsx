@@ -19,6 +19,7 @@ const ContentDetails = ({isLoading, details}: ContentDetailsProps) => {
       {isLoading && <span>Data is loading</span>}
       {!isLoading && details && (
         <>
+          <CategoryTitle titleText={"Characteristics"} />
           {details.description ? <span>{details.description}</span> : "Loading..."}
           <CategoryTitle titleText={"Types"} />
           <div>

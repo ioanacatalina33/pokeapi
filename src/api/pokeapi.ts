@@ -10,9 +10,10 @@ const apiGetPokemonEndpoint = "https://pokeapi.co/api/v2/pokemon";
 export async function getPokemons(offset: number, limit: number) {
   return axios
     .get(`${apiGetPokemonsEndpoint}?offset=${offset}&limit=${limit}`)
-    .then((res): PokemonData[] => {
+    .then((res): {[key: string]: PokemonData} => {
       if (res.status !== 200) throw "Status code " + res.status;
-      let pokemonsData: PokemonData[] = [];
+      //let dataaa = JSON.parse(res.data);
+      let pokemonsData: {};
       try {
         pokemonsData = mapPokemonsToPokemonData(res.data);
       } catch (e) {

@@ -25,7 +25,9 @@ export function fetchOnePokemon(name: string) {
   };
 }
 
-export function pokemonsFetched(pokemons: PokemonData[]): PokemonsFetchedAction {
+export function pokemonsFetched(pokemons: {
+  [key: string]: PokemonData;
+}): PokemonsFetchedAction {
   return {
     type: POKEMONS_FETCHED,
     payload: pokemons,

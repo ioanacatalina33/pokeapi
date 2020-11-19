@@ -23,7 +23,14 @@ const PokemonsList = ({pokemonCards}: PokemonsListProps) => {
   return (
     <FlexDiv>
       {pokemonCards.map((card) => (
-        <PokemonCard key={card.name} card={card} />
+        <PokemonCard
+          key={card.name}
+          card={card}
+          // card={{
+          //   ...card,
+          //   profilePic: card.details ? card.details.sprites.front_default : "",
+          // }}
+        />
       ))}
       {generateEmptyCards().map((card) => (
         <FlexEmptyElement key={card.name} />

@@ -17,12 +17,12 @@ function PokeProfile() {
 
   // Get Pokemon name from the pathname
   const {pathname} = useLocation();
-  let pokemonName = pathname.split("/")[2];
-  pokemonName = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
+  const pokemonName = pathname.split("/")[2];
+  const pokemonTitle = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 
   // Find PokemonData object in store by pokemon name
-  const pokemonData: PokemonData | undefined = useSelector((state: RootState) =>
-    state.pokemonData.pokemons.find((pokemon) => pokemon.name === pokemonName)
+  const pokemonData: PokemonData | undefined = useSelector(
+    (state: RootState) => state.pokemonData.pokemons[pokemonName]
   );
 
   const onBackClicked = () => {
@@ -40,7 +40,7 @@ function PokeProfile() {
     <Content>
       <PokeButton buttonText="< Back" onClicked={onBackClicked} />
 
-      <Subtitle titleText={pokemonName} />
+      <Subtitle titleText={pokemonTitle} />
       {pokemonData && pokemonData.details && (
         <>
           <FlexDiv>

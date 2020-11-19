@@ -8,7 +8,7 @@ import {
   PokemonActionsTypes,
 } from "./types";
 const initialState: PokemonState = {
-  pokemons: [],
+  pokemons: {},
   isPokeDataLoading: false,
   isPokeDataError: false,
 };
@@ -40,29 +40,28 @@ export function pokemonDataReducer(
       };
     }
     case ONE_POKEMON_FETCHED: {
-      let pokemons = state.pokemons.slice();
-      let pokemon = pokemons.find((poke) => poke.name === action.payload.name);
-      if (pokemon) {
-        pokemon.details = action.payload.details;
-        pokemon.isError = action.payload.isError;
-        pokemon.isLoading = action.payload.isLoading;
-        pokemon.profilePic = action.payload.profilePic;
-      }
       return {
         ...state,
-        pokemons: pokemons,
+        pokemons: {
+          ...state.pokemons,
+          [action.payload.name]: {
+            ...state.pokemons[action.payload.name],
+            ...action.payload,
+          },
+        },
       };
     }
     case ONE_POKEMON_FETCH_ERROR: {
-      let pokemons = state.pokemons.slice();
-      let pokemon = pokemons.find((poke) => poke.name === action.pokemonName);
-      if (pokemon) {
-        pokemon.isError = true;
-        pokemon.isLoading = false;
-      }
+      let pokemonUpdate = {isError: true, isLoading: false};
       return {
         ...state,
-        pokemons: pokemons,
+        pokemons: {
+          ...state.pokemons,
+          [action.pokemonName]: {
+            ...state.pokemons[action.pokemonName],
+            ...pokemonUpdate,
+          },
+        },
       };
     }
     default:

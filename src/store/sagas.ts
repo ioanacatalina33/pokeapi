@@ -12,7 +12,7 @@ export default function* rootSaga() {
    For each pokemon, calls in parallel a generator function that will retrieve all data for that pokemon
  */
 function* fetchPokemons() {
-  let pokemons: PokemonData[] = [];
+  let pokemons: {[key: string]: PokemonData} = {};
   try {
     pokemons = yield call(API.getPokemons, 0, 150);
     yield put(PokemonActions.pokemonsFetched(pokemons));
@@ -23,9 +23,9 @@ function* fetchPokemons() {
 
   // Dispath actions to fetch every Pokemon (ran simultanously)
   const functionCalls: any = [];
-  pokemons.forEach((pokemon) => {
-    functionCalls.push(call(fetchOnePokemon, pokemon.name));
-  });
+  for (let pokemon in pokemons) {
+    functionCalls.push(call(fetchOnePokemon, pokemons[pokemon].name));
+  }
   yield all(functionCalls);
 }
 

@@ -20,7 +20,7 @@ const ListPage = () => {
     <Content>
       <Subtitle titleText="1st Generation Pokemons" />
       <SearchBar onSearchQuery={onSearchQuery} />
-      <PokemonsList pokemonCards={pokemons} />
+      <PokemonsList pokemonCards={Object.values(pokemons)} />
       {isPokeDataLoading && <span>Loading...</span>}
       {isPokeDataError && <span>Could not load all pokemons :(</span>}
     </Content>
@@ -28,48 +28,3 @@ const ListPage = () => {
 };
 
 export default ListPage;
-
-const mockPokemonCards = [
-  {
-    isLoading: false,
-    name: "Poke1",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-  {
-    isLoading: false,
-    name: "Poke2",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-  {
-    isLoading: false,
-    name: "Poke3",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-  {
-    isLoading: false,
-    name: "Poke4",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-  {
-    isLoading: false,
-    name: "Poke5",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-  {
-    isLoading: false,
-    name: "Poke6",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-  {
-    isLoading: false,
-    name: "Poke7",
-    profilePic:
-      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png",
-  },
-];

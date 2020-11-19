@@ -22,7 +22,9 @@ const PokemonCard = ({card}: PokemonCardProps) => {
         style={{textDecoration: "none", color: colors.colorText}}
         to={PATH_PROFILE + "/" + card.name}
       >
+        <PokePlaceholder src="./img/profilePlaceholder.png" alt={""} />
         <PokeImg src={card.profilePic} alt={card.name} />
+
         <CardName>{card.name}</CardName>
       </Link>
     </CardDiv>
@@ -32,6 +34,7 @@ const PokemonCard = ({card}: PokemonCardProps) => {
 export default PokemonCard;
 
 const CardDiv = styled.div`
+  position: relative;
   ${addFlexProperties("1 0 41%")}
   margin: 10px;
   @media screen and ${device.sm} {
@@ -39,7 +42,7 @@ const CardDiv = styled.div`
   }
   box-shadow: 0px 0px 0px ${addColorTransparency(colors.secondary, 40)};
   background-color: rgb(255, 255, 255, 0.5);
-  border: 1px solid rgb(0, 0, 0, 0.2);
+  border: 1px solid rgb(200, 200, 200, 1);
   border-radius: 5px;
   text-align: center;
   &:hover {
@@ -51,9 +54,26 @@ const CardDiv = styled.div`
 `;
 
 const PokeImg = styled.img`
-  max-width: 85%;
-  max-height: 100%;
-  padding: 4px;
+  ${addDefaultTransition()}
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  margin: 0;
+`;
+
+const PokePlaceholder = styled.img`
+  ${addDefaultTransition()}
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  margin: 0;
+  background-color: ${colors.backgroundLight};
+  background-color: green;
 `;
 
 const CardName = styled.div`

@@ -25,13 +25,11 @@ const SearchBar = ({onSearchQuery}: SearchBarProps) => {
   */
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    console.log("we got here " + newValue);
     if (keyPressedTimeout) clearTimeout(keyPressedTimeout);
     setKeyPressedTimeout(
       setTimeout(() => {
-        console.log("we got here " + newValue);
         onSearchQuery(newValue);
-      }, 400)
+      }, 300)
     );
   };
 

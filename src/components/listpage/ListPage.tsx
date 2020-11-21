@@ -1,42 +1,75 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import Content from "../common/Content";
 import SearchBar from "./SearchBar";
 import PokemonsList from "./PokemonsList";
 import Subtitle from "../common/Subtitle";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
-import useYScroll from "../../utils/useYScroll";
+import {INCREMENT_CARDS_LIMIT, RESET_CARDS_LIMIT} from "../../store/appstates/types";
+import {setSearchQuery} from "../../store/appstates/actions";
+import {PokemonCardData} from "./PokeCard";
 
 const ListPage = () => {
-  const [cardsLimit, setCardsLimit] = useState(20);
-  const currentScrollY = useYScroll();
-
-  const {pokemons, isPokeDataLoading, isPokeDataError} = useSelector(
-    (state: RootState) => state.pokemonData
+  const dispatch = useDispatch();
+  const {pokemonsFilteredList, isPokemonsListLoading, isPokemonsListError} = useSelector(
+    (state: RootState) => {
+      return {
+        pokemonsFilteredList: Object.values(state.pokemonStore.pokemons)
+          .filter((pokemon) => pokemon.name.includes(state.appStates.query))
+          .slice(0, state.appStates.cardsLimit),
+        ...state.pokemonStore,
+      };
+    }
   );
 
   function onSearchQuery(query: string) {
-    //TODO: search in the list
-    console.log("TODO: search for query " + query);
+    dispatch(setSearchQuery(query));
   }
 
-  useEffect(() => {
+  function checkIncrementCardsLimit() {
     if (window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
-      setCardsLimit((prevState) => prevState + 20);
+      dispatch({type: INCREMENT_CARDS_LIMIT});
     }
-  }, [currentScrollY]);
-
-  function getCardsShown(limit: number) {
-    return Object.values(pokemons).slice(0, limit);
   }
+
+  // Detect scroll events to increase the cards display limit
+  useEffect(() => {
+    window.addEventListener("scroll", checkIncrementCardsLimit);
+    return () => {
+      window.removeEventListener("scroll", checkIncrementCardsLimit);
+    };
+  });
+
+  // When leaving the page the cards display limit is reset
+  useEffect(() => {
+    return () => {
+      resetCardsLimit();
+    };
+  }, []);
+
+  function resetCardsLimit() {
+    dispatch({type: RESET_CARDS_LIMIT});
+  }
+
+  const getCardsShown = useCallback((): PokemonCardData[] => {
+    return pokemonsFilteredList.map((pokemon) => {
+      return {
+        name: pokemon.name,
+        profilePic: pokemon.details ? pokemon.details.profilePic : "",
+        isLoading: pokemon.isDetailsLoading,
+      };
+    });
+  }, [pokemonsFilteredList]);
 
   return (
     <Content>
       <Subtitle titleText="1st Generation Pokemons" />
       <SearchBar onSearchQuery={onSearchQuery} />
-      <PokemonsList pokemonCards={getCardsShown(cardsLimit)} />
-      {isPokeDataLoading && <span>Loading...</span>}
-      {isPokeDataError && <span>Could not load all pokemons :(</span>}
+      {!isPokemonsListLoading && !isPokemonsListError && (
+        <PokemonsList cards={getCardsShown()} />
+      )}
+      {isPokemonsListLoading && <span>Loading...</span>}
+      {isPokemonsListError && <span>Could not load pokemons :(</span>}
     </Content>
   );
 };

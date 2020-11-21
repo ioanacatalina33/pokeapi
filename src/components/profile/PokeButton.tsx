@@ -9,13 +9,22 @@ const PokeButton = ({
   onClicked: () => void;
   buttonText: string;
 }) => {
-  return <Button onClick={onClicked}>{buttonText}</Button>;
+  function buttonClicked(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    evt.preventDefault();
+    onClicked();
+  }
+
+  return <Button onClick={buttonClicked}>{buttonText}</Button>;
 };
 
-const Button = styled.span`
+const Button = styled.button`
   font-family: "Pokemon Solid", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto";
   font-size: 2rem;
   letter-spacing: 5px;
+  border: none;
+  background: transparent;
+  text-decoration: none;
+  outline: none;
   color: ${colors.primary};
   -webkit-text-stroke-color: ${colors.secondary};
   -webkit-text-stroke-width: 1px;

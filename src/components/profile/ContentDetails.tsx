@@ -4,37 +4,25 @@ import {colors} from "../../utils/CssUtils";
 import CategoryTitle from "../common/CategoryTitle";
 
 interface ContentDetailsProps {
-  isLoading: boolean;
-  details?: {
-    stats: string[];
-    types: string[];
-    description?: string;
-    isDescriptionLoading: boolean;
-  };
+  stats?: string[];
+  types?: string[];
 }
 
-const ContentDetails = ({isLoading, details}: ContentDetailsProps) => {
+const ContentDetails = ({stats = [], types = []}: ContentDetailsProps) => {
   return (
     <ContentDetailsDiv>
-      {isLoading && <span>Data is loading</span>}
-      {!isLoading && details && (
-        <>
-          <CategoryTitle titleText={"Characteristics"} />
-          {details.description ? <span>{details.description}</span> : "Loading..."}
-          <CategoryTitle titleText={"Types"} />
-          <div>
-            {details.types.map((type) => (
-              <StyledBadge key={type}>{type}</StyledBadge>
-            ))}
-          </div>
-          <CategoryTitle titleText={"Stats"} />
-          <ul style={{margin: 0}}>
-            {details.stats.map((stat) => (
-              <li key={stat}>{stat}</li>
-            ))}
-          </ul>{" "}
-        </>
-      )}
+      <CategoryTitle titleText={"Types"} />
+      <div>
+        {types.map((type) => (
+          <StyledBadge key={type}>{type}</StyledBadge>
+        ))}
+      </div>
+      <CategoryTitle titleText={"Stats"} />
+      <ul style={{margin: 0}}>
+        {stats.map((stat) => (
+          <li key={stat}>{stat}</li>
+        ))}
+      </ul>{" "}
     </ContentDetailsDiv>
   );
 };

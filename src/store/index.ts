@@ -3,9 +3,11 @@ import {pokemonDataReducer} from "./pokemondata/reducers";
 import {createStore, applyMiddleware} from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./sagas";
+import {appStatesReducer} from "./appstates/reducers";
 
 const rootReducer = combineReducers({
-  pokemonData: pokemonDataReducer,
+  pokemonStore: pokemonDataReducer,
+  appStates: appStatesReducer,
 });
 
 // create the saga middleware

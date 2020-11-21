@@ -9,6 +9,6 @@ export default CategoryTitle;
 
 const H3Category = styled.h3`
   padding: 0;
-  margin: 0.8rem 0rem 0.5rem 0rem;
+  margin: 0.8rem 0rem 0.8rem 0rem;
   font-size: 1.2rem;
 `;

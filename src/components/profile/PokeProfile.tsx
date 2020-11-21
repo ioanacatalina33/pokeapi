@@ -10,10 +10,13 @@ import ContentDetails from "./ContentDetails";
 import ContentPhotos from "./ContentPhotos";
 import {PokemonData} from "../../store/pokemondata/types";
 import {RootState} from "../../store";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {fetchDescription} from "../../store/pokemondata/actions";
+import ContentDescription from "./ContentDescription";
 
 function PokeProfile() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   // Get Pokemon name from the pathname
   const {pathname} = useLocation();
@@ -21,44 +24,74 @@ function PokeProfile() {
   const pokemonTitle = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
 
   // Find PokemonData object in store by pokemon name
-  const pokemonData: PokemonData | undefined = useSelector(
-    (state: RootState) => state.pokemonData.pokemons[pokemonName]
+  const {pokemonData, isPokeDataLoading, isPokeDataError} = useSelector(
+    (state: RootState) => {
+      return {
+        pokemonData: state.pokemonStore.pokemons[pokemonName],
+        isPokeDataLoading: state.pokemonStore.isPokemonsListLoading,
+        isPokeDataError: state.pokemonStore.isPokemonsListError,
+      };
+    }
   );
 
   const onBackClicked = () => {
-    history.goBack();
+    return history.push("/");
   };
 
-  const mapPokemonFullToContentDetails = (item: PokemonData) => {
+  const mapPokemonToContentDetails = (item: PokemonData) => {
     return {
-      isLoading: item.isLoading,
-      details: item.details,
+      stats: !item.details
+        ? []
+        : item.details.stats.map(
+            (stat) => `${stat.name} (${stat.baseStat}) - effort: ${stat.effort}`
+          ),
+      types: item.details ? item.details.types : [],
     };
   };
 
+  /*
+    When pokemonData is loaded from the store, check if desciption is set, if not
+    make a call to fetch description.
+  */
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (pokemonData && pokemonData.details && !pokemonData.description) {
+      dispatch(
+        fetchDescription(
+          pokemonData.details.stats.map((stat) => stat.url),
+          pokemonData.name
+        )
+      );
+    }
+  }, [pokemonData, dispatch]);
 
   return (
     <Content>
       <PokeButton buttonText="< Back" onClicked={onBackClicked} />
 
       <Subtitle titleText={pokemonTitle} />
-      {pokemonData && pokemonData.details && (
+      {pokemonData && !pokemonData.isDetailsLoading && !pokemonData.isDetailsError && (
         <>
           <FlexDiv>
             <FlexElement>
-              <ProfileImg src={pokemonData.profilePic} alt={pokemonData.name} />
+              <ProfileImg
+                src={pokemonData.details ? pokemonData.details.profilePic : ""}
+                alt={pokemonData.name}
+              />
             </FlexElement>
             <FlexElement>
-              <ContentDetails {...mapPokemonFullToContentDetails(pokemonData)} />
+              <ContentDetails {...mapPokemonToContentDetails(pokemonData)} />
             </FlexElement>
           </FlexDiv>
-          <ContentPhotos photos={pokemonData.details.sprites} />
+          <ContentDescription {...pokemonData} />
+          {pokemonData.details && <ContentPhotos photos={pokemonData.details.sprites} />}
         </>
       )}
-      {pokemonData && pokemonData.isLoading && <span>Loading... </span>}
+      {(isPokeDataLoading || (pokemonData && pokemonData.isDetailsLoading)) && (
+        <span>Loading... </span>
+      )}
+      {(isPokeDataError || (pokemonData && pokemonData.isDetailsError)) && (
+        <span>There was a problem loading the Pokemon :( </span>
+      )}
     </Content>
   );
 }
@@ -81,31 +114,5 @@ const ProfileImg = styled.img`
   border-radius: 10px;
   background-color: rgb(255, 255, 255, 0.5);
 `;
-
-const pokemonMock = {
-  id: "4",
-  name: "Ivysaur",
-  isLoading: false,
-  profilePic:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png",
-  details: {
-    sprites: {
-      back_female: undefined,
-      back_shiny_female: undefined,
-      back_default:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
-      front_female: undefined,
-      front_shiny_female: undefined,
-      back_shiny:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/2.png",
-      front_shiny:
-        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/2.png",
-    },
-    stats: ["hp", "attack", "defense", "special-attack", "special-defense", "speed"],
-    types: ["grass", "poison"],
-    description: "Some descriptions about Ivysaur",
-    isDescriptionLoading: false,
-  },
-};
 
 export default PokeProfile;

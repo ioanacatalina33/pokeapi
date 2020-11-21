@@ -1,45 +1,74 @@
-import {PokemonData, PokemonDetails, PokemonSprites} from "../pokemondata/types";
+import {PokemonData, Stats} from "../pokemondata/types";
 
-/* Maps the response of a pokemon list with a list of PokemonData
-isLoading is set to true since not all the data from the PokemonData is fetched
+const generateDefaultPokemonData = function (name: string): PokemonData {
+  return {
+    name: name,
+    isDetailsLoading: false,
+    isDetailsError: false,
+    isDescriptionLoading: false,
+    isDescriptionError: false,
+  };
+};
+
+/* 
+    Maps the get pokemon list response with a list of PokemonData
  */
-export function mapPokemonsToPokemonData(resData: any): {[key: string]: PokemonData} {
+export function mapPokemons(resData: any): {[key: string]: PokemonData} {
   const pokemonsRes = resData.results;
   const pokemonsData: {[key: string]: PokemonData} = {};
   pokemonsRes.forEach(
     (pokemonRes: any) =>
-      (pokemonsData[pokemonRes.name] = {
-        name: pokemonRes.name,
-        isLoading: true,
-        isError: false,
-      })
+      (pokemonsData[pokemonRes.name] = generateDefaultPokemonData(pokemonRes.name))
   );
   return pokemonsData;
 }
 
-/* Maps the response of a pokemon details request with the PokemonData
-isLoading is set to false, all the data for the PokemonData is being fetched
+/* 
+    Maps the get pokemon details response with the PokemonData
  */
-export function mapPokemonToFullPokemonData(pokemonRes: any, name: string): PokemonData {
-  const pokemonData: PokemonData = {
-    name: name,
-    isLoading: false,
-    isError: false,
-  };
-
-  const stats: string[] = pokemonRes.stats.map((statObj: any) => statObj.stat.name);
+export function mapOnePokemon(pokemonRes: any): PokemonData {
+  const stats: Stats[] = pokemonRes.stats.map((statObj: any) => {
+    return {
+      name: statObj.stat.name,
+      baseStat: statObj.base_stat,
+      effort: statObj.effort,
+      url: statObj.stat.url,
+    };
+  });
   const types: string[] = pokemonRes.types.map((statObj: any) => statObj.type.name);
   const profilepic: string = pokemonRes.sprites.other["official-artwork"].front_default;
   const {other, versions, ...sprites} = pokemonRes.sprites;
 
-  const details: PokemonDetails = {
+  const pokemonData = generateDefaultPokemonData(pokemonRes.name);
+  pokemonData.details = {
+    profilePic: profilepic,
     sprites: {...sprites},
     stats: stats,
     types: types,
-    isDescriptionLoading: false,
   };
-  pokemonData.details = details;
-  pokemonData.profilePic = profilepic;
+
+  if (pokemonRes.name === "fearow") throw "mew";
 
   return pokemonData;
+}
+
+/*
+    Takes a stat response and returns a list of all the characteristics urls
+*/
+export function mapStatsToCharacteristicsUrl(stats: any): string[] {
+  return stats.characteristics.map((char: any) => char.url);
+}
+
+/*
+    Takes a characteristic response and returns its description in one language
+*/
+export function mapCharacteristicDescription(
+  characteristicRes: any,
+  lang: string
+): string {
+  const descriptions: any[] = characteristicRes.descriptions;
+  const descriptionLang = descriptions.reduce((finalDesc, desc) => {
+    if (desc.language.name === lang) return (finalDesc = desc.description);
+  }, "");
+  return descriptionLang;
 }

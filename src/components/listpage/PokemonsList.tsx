@@ -1,18 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import {PokemonData} from "../../store/pokemondata/types";
 import {addFlexProperties, device} from "../../utils/CssUtils";
 import FlexDiv from "../common/FlexDiv";
-import PokemonCard from "./PokeCard";
+import PokemonCard, {PokemonCardData} from "./PokeCard";
 
-interface PokemonsListProps {
-  pokemonCards: PokemonData[];
-}
-
-const PokemonsList = ({pokemonCards}: PokemonsListProps) => {
-  /* In order to keep the flex layout nice, the remaining space is filled on the last row with empty cards*/
+const PokemonsList = ({cards}: {cards: PokemonCardData[]}) => {
+  /* 
+    In order to keep the flex layout nice, the remaining space is filled on the last row with empty cards
+  */
   function generateEmptyCards() {
-    let emptyElementsToAdd = 4 - (pokemonCards.length % 4);
+    let emptyElementsToAdd = 4 - (cards.length % 4);
     let emptyCards = [];
     for (let i = 0; i < emptyElementsToAdd; i++) {
       emptyCards.push({id: 0, name: "emptycard" + i, img: ""});
@@ -22,15 +19,8 @@ const PokemonsList = ({pokemonCards}: PokemonsListProps) => {
 
   return (
     <FlexDiv>
-      {pokemonCards.map((card) => (
-        <PokemonCard
-          key={card.name}
-          card={card}
-          // card={{
-          //   ...card,
-          //   profilePic: card.details ? card.details.sprites.front_default : "",
-          // }}
-        />
+      {cards.map((card) => (
+        <PokemonCard key={card.name} {...card} />
       ))}
       {generateEmptyCards().map((card) => (
         <FlexEmptyElement key={card.name} />

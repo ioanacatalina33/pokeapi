@@ -14,7 +14,7 @@ export default Content;
 
 const ContentDiv = styled.div`
   max-width: 800px;
-  min-height: 600px;
+  min-height: 800px;
   margin: 0 auto;
   border: 1px solid rgb(0, 0, 0, 0.4);
   border-radius: 0px;

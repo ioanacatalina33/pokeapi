@@ -12,11 +12,13 @@ import {
 } from "../../utils/CssUtils";
 import ImgWithLoading from "../common/ImgWithLoading";
 
-interface PokemonCardProps {
-  card: {name: string; profilePic?: string; isLoading: boolean};
+export interface PokemonCardData {
+  name: string;
+  profilePic?: string;
+  isLoading: boolean;
 }
 
-const PokemonCard = ({card}: PokemonCardProps) => {
+const PokemonCard = (card: PokemonCardData) => {
   return (
     <CardDiv>
       <Link

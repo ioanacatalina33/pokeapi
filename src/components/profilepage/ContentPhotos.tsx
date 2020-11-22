@@ -1,6 +1,7 @@
 import React from "react";
 import {PokemonSprites} from "../../store/pokemondata/types";
 import CategoryTitle from "../common/CategoryTitle";
+import FadeInImage from "../common/FadeInImage";
 
 const ContentPhotos = ({photos}: {photos: PokemonSprites}) => {
   let photoType: keyof typeof photos;
@@ -8,7 +9,7 @@ const ContentPhotos = ({photos}: {photos: PokemonSprites}) => {
   for (photoType in photos) {
     if (photos[photoType])
       imgElements.push(
-        <img
+        <FadeInImage
           src={photos[photoType]}
           alt={photoType}
           key={photoType}

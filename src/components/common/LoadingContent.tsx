@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import LoadingAnimation from "./LoadingAnimation";
+import withFadeIn from "./withFadeIn";
+import FadeInImage from "./FadeInImage";
+import LoadingPokeBalls from "./LoadingPokeBalls";
 
 interface ContentProps {
   children: React.ReactNode;
@@ -14,18 +16,18 @@ const LoadingContent = (props: ContentProps) => {
     <>
       {props.isLoading || props.isError ? (
         <ContentDiv>
-          {props.isLoading && <LoadingAnimation />}
+          {props.isLoading && <LoadingPokeBalls />}
           {props.isError && (
             <div>
               {props.errorText}
               <br />
               <br />
-              <img src="/img/imgError.png" />
+              <FadeInImage src="/img/imgError.png" />
             </div>
           )}
         </ContentDiv>
       ) : (
-        props.children
+        withFadeIn(props.children)
       )}
     </>
   );

@@ -14,6 +14,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {fetchDescription} from "../../store/pokemondata/actions";
 import ContentDescription from "./ContentDescription";
 import LoadingContent from "../common/LoadingContent";
+import FadeInImage from "../common/FadeInImage";
 
 function PokeProfile() {
   const history = useHistory();
@@ -75,17 +76,19 @@ function PokeProfile() {
           isError={isPokeDataError || pokemonData.isDetailsError}
           errorText="Could not load the Pokemon"
         >
-          <FlexDiv>
-            <FlexElement>
-              <img
-                src={pokemonData.details ? pokemonData.details.profilePic : ""}
-                style={{width: "80%"}}
-              />
-            </FlexElement>
-            <FlexElement>
-              <ContentDetails {...mapPokemonToContentDetails(pokemonData)} />
-            </FlexElement>
-          </FlexDiv>
+          {
+            <FlexDiv>
+              <FlexElement>
+                <FadeInImage
+                  src={pokemonData.details ? pokemonData.details.profilePic : ""}
+                  style={{maxWidth: "100%"}}
+                />
+              </FlexElement>
+              <FlexElement>
+                <ContentDetails {...mapPokemonToContentDetails(pokemonData)} />
+              </FlexElement>
+            </FlexDiv>
+          }
           <ContentDescription {...pokemonData} />
           {pokemonData.details && <ContentPhotos photos={pokemonData.details.sprites} />}
         </LoadingContent>
@@ -95,22 +98,13 @@ function PokeProfile() {
 }
 
 const FlexElement = styled.div`
-  ${addFlexProperties("1 0 55%")}
+  ${addFlexProperties("1 0 51%")}
   margin: 2rem 0rem 1rem 0rem;
   text-align: center;
   @media screen and ${device.sm} {
     margin: 3rem 1rem 3rem 1rem;
-    ${addFlexProperties("1 0 0%")}
+    ${addFlexProperties("1 0 0")}
   }
-`;
-
-const ProfileImg = styled.img`
-  max-width: 50%;
-  max-height: 100%;
-  padding: 30px;
-  border 1px solid rgb(0,0,0,0.3);
-  border-radius: 10px;
-  background-color: rgb(255, 255, 255, 0.5);
 `;
 
 export default PokeProfile;

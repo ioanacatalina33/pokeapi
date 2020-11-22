@@ -47,7 +47,8 @@ export function mapOnePokemon(pokemonRes: any): PokemonData {
     types: types,
   };
 
-  if (pokemonRes.name === "fearow") throw "mew";
+  // for testing purposes I left one pokemon out
+  if (pokemonRes.name === "slowbro") throw "ew";
 
   return pokemonData;
 }

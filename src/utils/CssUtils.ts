@@ -25,6 +25,9 @@ export const sizes = {
   fontSize: "1.2rem",
 };
 
+/*
+    ..........Browses support...........
+*/
 export function addTransform(property: string) {
   return `-webkit-transform: ${property}; -ms-transform: ${property}; transform: ${property};`;
 }
@@ -46,7 +49,6 @@ export function addFlexProperties(values: string) {
 }
 
 export function addFlexWrap(property: string) {
-  // No Webkit/FF Box fallback.
   const result = `-webkit-flex-wrap: ${property};`;
   if (property === "nowrap") {
     result.concat(`-ms-flex-wrap: none;`);

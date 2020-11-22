@@ -30,7 +30,6 @@ const ContentDetails = ({stats = [], types = []}: ContentDetailsProps) => {
 export default React.memo(ContentDetails);
 
 const ContentDetailsDiv = styled.div`
-  height: 100%;
   text-align: left;
 `;
 

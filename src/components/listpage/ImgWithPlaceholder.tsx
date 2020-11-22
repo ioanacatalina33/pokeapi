@@ -74,6 +74,7 @@ const PokePlaceholder = styled.img<{loaded: boolean}>`
   background-size: 400px 640px;
   -webkit-animation: ${loadingSlideRule};
   -moz-animation: ${loadingSlideRule};
+  -ms-animation: ${loadingSlideRule};
   -o-animation: ${loadingSlideRule};
   animation: ${loadingSlideRule};
 `;

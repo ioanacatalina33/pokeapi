@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {addDefaultTransition, addTransform} from "../../utils/cssUtils";
 
-const LoadingAnimation = () => {
+const LoadingPokeBalls = () => {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const LoadingAnimation = () => {
     </ContentDiv>
   );
 };
-export default LoadingAnimation;
+export default LoadingPokeBalls;
 
 const ContentDiv = styled.div`
   text-align: center;

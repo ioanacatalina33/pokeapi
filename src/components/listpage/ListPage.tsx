@@ -47,10 +47,11 @@ const ListPage = () => {
     }
   }
 
-  // When leaving the page the cards display limit is reset
+  // When leaving the page the cards display limit is reset and the search query set to ""
   useEffect(() => {
     return () => {
       dispatch({type: RESET_CARDS_LIMIT});
+      dispatch(setSearchQuery(""));
     };
   }, []);
 

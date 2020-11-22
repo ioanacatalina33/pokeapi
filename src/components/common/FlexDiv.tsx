@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {addFlexbox, addFlexWrap, alignItems} from "../../utils/CssUtils";
+import {addFlexbox, addFlexWrap, alignItems} from "../../utils/cssUtils";
 
 const FlexDiv = styled.div`
   width: 100%;

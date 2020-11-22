@@ -5,7 +5,7 @@ import {
   colors,
   addDefaultTransition,
   addColorTransparency,
-} from "../../utils/CssUtils";
+} from "../../utils/cssUtils";
 
 interface SearchBarProps {
   onSearchQuery: (query: string) => void;
@@ -15,12 +15,12 @@ const SearchBar = ({onSearchQuery}: SearchBarProps) => {
   let [keyPressedTimeout, setKeyPressedTimeout] = useState<number>(0);
 
   useEffect(() => {
-    if (keyPressedTimeout) return clearTimeout(keyPressedTimeout);
+    if (keyPressedTimeout) return () => clearTimeout(keyPressedTimeout);
   }, []);
 
   /*
-  When value of the search input changes (user presses a key) we set a timeout for each key pressed
-  to detect when user stops from typing. Only when user makes a pause of more than 400ms
+  When value of the search input changes (user presses a key) a timeout is set for each key pressed
+  to detect when user stops from typing. Only when user makes a pause of more than 300ms
   the callback onSearchQuery is triggered. 
   */
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,12 +35,7 @@ const SearchBar = ({onSearchQuery}: SearchBarProps) => {
 
   return (
     <CenteredDiv>
-      <StyledInput
-        type="search"
-        name="PokeSearch"
-        placeholder="Search a Pokemon"
-        onChange={onChange}
-      />
+      <StyledInput type="search" placeholder="Search for pokemons" onChange={onChange} />
     </CenteredDiv>
   );
 };

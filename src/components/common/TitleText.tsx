@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import {device} from "../../utils/CssUtils";
+import {device} from "../../utils/cssUtils";
 
-const Subtitle = ({titleText}: {titleText: string}) => {
-  return <H2>{titleText}</H2>;
+const TitleText = ({text}: {text: string}) => {
+  return <H2>{text}</H2>;
 };
 
-export default Subtitle;
+export default TitleText;
 
 const H2 = styled.h2`
   padding: 0;

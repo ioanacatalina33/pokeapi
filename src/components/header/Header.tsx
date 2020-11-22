@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
-import {device, colors} from "../../utils/CssUtils";
+import {device, colors} from "../../utils/cssUtils";
 
 const Header = () => {
   return (

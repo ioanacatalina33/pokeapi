@@ -1,36 +1,33 @@
-import React, {useCallback, useEffect} from "react";
+import React, {useEffect} from "react";
 import Content from "../common/Content";
 import SearchBar from "./SearchBar";
 import PokemonsList from "./PokemonsList";
-import Subtitle from "../common/Subtitle";
+import TitleText from "../common/TitleText";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
 import {INCREMENT_CARDS_LIMIT, RESET_CARDS_LIMIT} from "../../store/appstates/types";
 import {setSearchQuery} from "../../store/appstates/actions";
 import {PokemonCardData} from "./PokeCard";
+import LoadingContent from "../common/LoadingContent";
 
 const ListPage = () => {
   const dispatch = useDispatch();
-  const {pokemonsFilteredList, isPokemonsListLoading, isPokemonsListError} = useSelector(
-    (state: RootState) => {
-      return {
-        pokemonsFilteredList: Object.values(state.pokemonStore.pokemons)
-          .filter((pokemon) => pokemon.name.includes(state.appStates.query))
-          .slice(0, state.appStates.cardsLimit),
-        ...state.pokemonStore,
-      };
-    }
-  );
-
-  function onSearchQuery(query: string) {
-    dispatch(setSearchQuery(query));
-  }
-
-  function checkIncrementCardsLimit() {
-    if (window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
-      dispatch({type: INCREMENT_CARDS_LIMIT});
-    }
-  }
+  const {
+    pokemonsFilteredList,
+    isPokemonsListLoading,
+    isPokemonsListError,
+    totalPokemonsNr,
+    displayLimit,
+  } = useSelector((state: RootState) => {
+    return {
+      pokemonsFilteredList: Object.values(state.pokemonStore.pokemons)
+        .filter((pokemon) => pokemon.name.includes(state.appStates.query))
+        .slice(0, state.appStates.cardsLimit),
+      ...state.pokemonStore,
+      totalPokemonsNr: Object.keys(state.pokemonStore.pokemons).length,
+      displayLimit: state.appStates.cardsLimit,
+    };
+  });
 
   // Detect scroll events to increase the cards display limit
   useEffect(() => {
@@ -40,18 +37,25 @@ const ListPage = () => {
     };
   });
 
+  // In case displayLimit reachest the number of pokemons in the original list
+  // the scroll event can be removed
+  function checkIncrementCardsLimit() {
+    if (displayLimit > totalPokemonsNr)
+      window.removeEventListener("scroll", checkIncrementCardsLimit);
+    else if (window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
+      dispatch({type: INCREMENT_CARDS_LIMIT});
+    }
+  }
+
   // When leaving the page the cards display limit is reset
   useEffect(() => {
     return () => {
-      resetCardsLimit();
+      dispatch({type: RESET_CARDS_LIMIT});
     };
   }, []);
 
-  function resetCardsLimit() {
-    dispatch({type: RESET_CARDS_LIMIT});
-  }
-
-  const getCardsShown = useCallback((): PokemonCardData[] => {
+  // Maps PokemonData to PokemonDataCard list
+  function getCardsShown(): PokemonCardData[] {
     return pokemonsFilteredList.map((pokemon) => {
       return {
         name: pokemon.name,
@@ -59,17 +63,23 @@ const ListPage = () => {
         isLoading: pokemon.isDetailsLoading,
       };
     });
-  }, [pokemonsFilteredList]);
+  }
+
+  function onSearchQuery(query: string) {
+    dispatch(setSearchQuery(query));
+  }
 
   return (
     <Content>
-      <Subtitle titleText="1st Generation Pokemons" />
+      <TitleText text="1st Generation Pokemons" />
       <SearchBar onSearchQuery={onSearchQuery} />
-      {!isPokemonsListLoading && !isPokemonsListError && (
+      <LoadingContent
+        isLoading={isPokemonsListLoading}
+        isError={isPokemonsListError}
+        errorText="Could not load pokemons"
+      >
         <PokemonsList cards={getCardsShown()} />
-      )}
-      {isPokemonsListLoading && <span>Loading...</span>}
-      {isPokemonsListError && <span>Could not load pokemons :(</span>}
+      </LoadingContent>
     </Content>
   );
 };

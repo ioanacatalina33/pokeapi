@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {addFlexProperties, device} from "../../utils/CssUtils";
+import {addFlexProperties, device} from "../../utils/cssUtils";
 import FlexDiv from "../common/FlexDiv";
 import PokemonCard, {PokemonCardData} from "./PokeCard";
 

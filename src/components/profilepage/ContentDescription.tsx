@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import CategoryTitle from "../common/CategoryTitle";
+import LoadingContent from "../common/LoadingContent";
 
 interface ContentDescriptionProps {
   description?: string;
@@ -16,16 +17,18 @@ const ContentDescription = ({
   return (
     <ContentDescriptionDiv>
       <CategoryTitle titleText={"Description"} />
-      {isDescriptionLoading && <span>Loading description...</span>}
-      {isDescriptionError && <span>Error loading description</span>}
-      {description && !isDescriptionError && !isDescriptionError && (
+      <LoadingContent
+        isLoading={isDescriptionLoading}
+        isError={isDescriptionError}
+        errorText="Error loading description"
+      >
         <div style={{textAlign: "left"}}>{description}</div>
-      )}
+      </LoadingContent>
     </ContentDescriptionDiv>
   );
 };
 
-export default ContentDescription;
+export default React.memo(ContentDescription);
 
 const ContentDescriptionDiv = styled.div`
   height: 100%;

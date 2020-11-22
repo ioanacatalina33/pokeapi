@@ -6,13 +6,12 @@ import {
   addTransform,
 } from "../../utils/cssUtils";
 
-const ImgWithLoading = ({
+const ImgWithPlaceholder = ({
   imgSrc,
   width = "100%",
 }: {
   imgSrc: string | undefined;
   width?: string;
-  alt?: string;
 }) => {
   const [imgLoaded, isImgLoaded] = useState(false);
 
@@ -27,6 +26,8 @@ const ImgWithLoading = ({
     </RelativeDiv>
   );
 };
+
+export default ImgWithPlaceholder;
 
 const loadingSlide = keyframes`
 0%{
@@ -76,5 +77,3 @@ const PokePlaceholder = styled.img<{loaded: boolean}>`
   -o-animation: ${loadingSlideRule};
   animation: ${loadingSlideRule};
 `;
-
-export default ImgWithLoading;

@@ -3,7 +3,7 @@ import {
   mapOnePokemon,
   mapStatsToCharacteristicsUrl,
   mapCharacteristicDescription,
-} from "../store/mappers/PokemonsMapper";
+} from "./pokeApiMapper";
 import {PokemonData} from "../store/pokemondata/types";
 import * as PokeApi from "./api/pokeApi";
 

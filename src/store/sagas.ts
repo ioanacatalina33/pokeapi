@@ -12,7 +12,7 @@ import * as PokemonActions from "./pokemondata/actions";
 
 export default function* rootSaga() {
   yield takeLatest(POKEMONS_FETCHING, getAllPokemons);
-  yield takeEvery(DETAILS_FETCHING, getPokemonsDetails);
+  yield takeLatest(DETAILS_FETCHING, getPokemonsDetails);
   yield takeEvery(DESCRIPTION_FETCHING, getDescription);
 }
 
@@ -34,7 +34,7 @@ function* getAllPokemons() {
 
 /* 
     Fetches each pokemon's details in parallel.
-    Updates the store with their details.
+    Updates the store.
  */
 function* getPokemonsDetails(action: DetailsFetchingAction) {
   try {
@@ -50,10 +50,10 @@ function* getPokemonsDetails(action: DetailsFetchingAction) {
 
 /*
     Fetches the description for one pokemon. Steps:
-      1. call in parallel to fetch the list of characteristics urls from each stat of the Pokemons
-      2. combine the list of lists of characteristics urls into one single list
-      3. call in paralel to fetch the description from each characteristics url
-      4. combine descriptions into one and update the store
+      1. calls in parallel to fetch the list of characteristics urls from each stat of the Pokemons
+      2. combines the lists of characteristics urls into one single list
+      3. calls in paralel to fetch the description from each characteristics url
+      4. combines descriptions into one and update the store
 */
 function* getDescription(action: DescriptionFetchingAction): any {
   try {

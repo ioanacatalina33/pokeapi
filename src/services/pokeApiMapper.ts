@@ -1,4 +1,4 @@
-import {PokemonData, Stats} from "../pokemondata/types";
+import {PokemonData, Stats} from "../store/pokemondata/types";
 
 const generateDefaultPokemonData = function (name: string): PokemonData {
   return {

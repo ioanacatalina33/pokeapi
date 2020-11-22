@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {device, colors} from "../../utils/CssUtils";
+import {device, colors} from "../../utils/cssUtils";
 
 interface ContentProps {
   children?: React.ReactNode;
@@ -14,7 +14,7 @@ export default Content;
 
 const ContentDiv = styled.div`
   max-width: 800px;
-  min-height: 800px;
+  min-height: 600px;
   margin: 0 auto;
   border: 1px solid rgb(0, 0, 0, 0.4);
   border-radius: 0px;

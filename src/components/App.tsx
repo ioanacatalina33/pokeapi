@@ -5,7 +5,7 @@ import Footer from "./footer";
 import Header from "./header";
 import ListPage from "./listpage";
 import NotFound from "./NotFound";
-import PokeProfile from "./profile";
+import PokeProfile from "./profilepage";
 import {useDispatch} from "react-redux";
 import {fetchPokemons} from "../store/pokemondata/actions";
 

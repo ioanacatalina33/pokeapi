@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import {addFlexProperties, device} from "../../utils/CssUtils";
+import {addFlexProperties, device} from "../../utils/cssUtils";
 import Content from "../common/Content";
 import FlexDiv from "../common/FlexDiv";
-import Subtitle from "../common/Subtitle";
+import TitleText from "../common/TitleText";
 import PokeButton from "./PokeButton";
 import {useHistory, useLocation} from "react-router-dom";
 import ContentDetails from "./ContentDetails";
@@ -13,6 +13,7 @@ import {RootState} from "../../store";
 import {useSelector, useDispatch} from "react-redux";
 import {fetchDescription} from "../../store/pokemondata/actions";
 import ContentDescription from "./ContentDescription";
+import LoadingContent from "../common/LoadingContent";
 
 function PokeProfile() {
   const history = useHistory();
@@ -67,15 +68,18 @@ function PokeProfile() {
   return (
     <Content>
       <PokeButton buttonText="< Back" onClicked={onBackClicked} />
-
-      <Subtitle titleText={pokemonTitle} />
-      {pokemonData && !pokemonData.isDetailsLoading && !pokemonData.isDetailsError && (
-        <>
+      <TitleText text={pokemonTitle} />
+      {pokemonData && (
+        <LoadingContent
+          isLoading={isPokeDataLoading || pokemonData.isDetailsLoading}
+          isError={isPokeDataError || pokemonData.isDetailsError}
+          errorText="Could not load the Pokemon"
+        >
           <FlexDiv>
             <FlexElement>
-              <ProfileImg
+              <img
                 src={pokemonData.details ? pokemonData.details.profilePic : ""}
-                alt={pokemonData.name}
+                style={{width: "80%"}}
               />
             </FlexElement>
             <FlexElement>
@@ -84,13 +88,7 @@ function PokeProfile() {
           </FlexDiv>
           <ContentDescription {...pokemonData} />
           {pokemonData.details && <ContentPhotos photos={pokemonData.details.sprites} />}
-        </>
-      )}
-      {(isPokeDataLoading || (pokemonData && pokemonData.isDetailsLoading)) && (
-        <span>Loading... </span>
-      )}
-      {(isPokeDataError || (pokemonData && pokemonData.isDetailsError)) && (
-        <span>There was a problem loading the Pokemon :( </span>
+        </LoadingContent>
       )}
     </Content>
   );

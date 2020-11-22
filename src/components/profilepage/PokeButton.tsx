@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {addDefaultTransition, addTransform, colors} from "../../utils/CssUtils";
+import {addDefaultTransition, addTransform, colors} from "../../utils/cssUtils";
 
 const PokeButton = ({
   onClicked,

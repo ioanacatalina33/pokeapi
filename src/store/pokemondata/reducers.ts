@@ -66,8 +66,6 @@ export function pokemonDataReducer(
         (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: any) => {
           pokemonDataObj[pokemonData.name] = {
             ...pokemonData,
-            isDetailsLoading: false,
-            isDescriptionError: false,
           };
           return pokemonDataObj;
         },
@@ -118,6 +116,7 @@ export function pokemonDataReducer(
             ...state.pokemons[action.payload.pokemonName],
             description: action.payload.description,
             isDescriptionLoading: false,
+            isDescriptionError: false,
           },
         },
       };

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {colors} from "../../utils/CssUtils";
+import {colors} from "../../utils/cssUtils";
 import CategoryTitle from "../common/CategoryTitle";
 
 interface ContentDetailsProps {
@@ -27,7 +27,7 @@ const ContentDetails = ({stats = [], types = []}: ContentDetailsProps) => {
   );
 };
 
-export default ContentDetails;
+export default React.memo(ContentDetails);
 
 const ContentDetailsDiv = styled.div`
   height: 100%;

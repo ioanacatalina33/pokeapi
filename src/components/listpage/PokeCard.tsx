@@ -9,8 +9,8 @@ import {
   addTransform,
   colors,
   device,
-} from "../../utils/CssUtils";
-import ImgWithLoading from "../common/ImgWithLoading";
+} from "../../utils/cssUtils";
+import ImgWithPlaceholder from "./ImgWithPlaceholder";
 
 export interface PokemonCardData {
   name: string;
@@ -25,14 +25,14 @@ const PokemonCard = (card: PokemonCardData) => {
         style={{textDecoration: "none", color: colors.colorText}}
         to={PATH_PROFILE + "/" + card.name}
       >
-        <ImgWithLoading imgSrc={card.profilePic} />
+        <ImgWithPlaceholder imgSrc={card.profilePic} width="80%" />
         <CardName>{card.name}</CardName>
       </Link>
     </CardDiv>
   );
 };
 
-export default PokemonCard;
+export default React.memo(PokemonCard);
 
 const CardDiv = styled.div`
   ${addFlexProperties("1 0 41%")}

@@ -25,4 +25,4 @@ const ContentPhotos = ({photos}: {photos: PokemonSprites}) => {
   );
 };
 
-export default ContentPhotos;
+export default React.memo(ContentPhotos);

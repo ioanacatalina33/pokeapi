@@ -12,11 +12,3 @@ export function getPokemon(pokemonName: string) {
 export function getFromURL(url: string) {
   return axios.get(`${url}`);
 }
-
-export function getCharacteristic(url: string) {
-  return axios.get(url);
-}
-
-export function getStat(url: string) {
-  return axios.get(url);
-}

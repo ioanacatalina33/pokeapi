@@ -1,11 +1,13 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import {PokemonSprites} from "../../store/pokemondata/types";
 import CategoryTitle from "../common/CategoryTitle";
 import FadeInImage from "../common/FadeInImage";
 
-const ContentPhotos = ({photos}: {photos: PokemonSprites}) => {
+const ContentPhotos: FunctionComponent<{
+  photos: PokemonSprites;
+}> = ({photos}: {photos: PokemonSprites}) => {
   let photoType: keyof typeof photos;
-  let imgElements = [];
+  const imgElements = [];
   for (photoType in photos) {
     if (photos[photoType])
       imgElements.push(

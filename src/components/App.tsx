@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, FunctionComponent} from "react";
 import {Switch, Route, useLocation} from "react-router-dom";
 import {PATH_LIST, PATH_PROFILE, PATH_PROFILE_NAME} from "../utils/Constants";
 import Footer from "./footer";
@@ -9,14 +9,14 @@ import PokeProfile from "./profilepage";
 import {useDispatch} from "react-redux";
 import {fetchPokemons} from "../store/pokemondata/actions";
 
-function App() {
+const App: FunctionComponent = () => {
   //we call to fetch the photos only once at the top element when first rendered
   const dispatch = useDispatch();
   const {pathname} = useLocation();
 
   useEffect(() => {
     dispatch(fetchPokemons());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,6 +40,6 @@ function App() {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

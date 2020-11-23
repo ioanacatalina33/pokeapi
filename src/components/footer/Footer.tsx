@@ -1,7 +1,7 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 
-const Footer = () => (
+const Footer: FunctionComponent = () => (
   <FooterDiv>
     &#169; Created by IoanaCatalinaE. using{" "}
     <a href="https://pokeapi.co" target="_blank" rel="noreferrer">

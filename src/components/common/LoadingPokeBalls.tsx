@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {FunctionComponent, useEffect, useState} from "react";
 import styled from "styled-components";
 import {addDefaultTransition, addTransform} from "../../utils/cssUtils";
 
-const LoadingPokeBalls = () => {
+/*
+  Three balls loading effect
+*/
+const LoadingPokeBalls: FunctionComponent = () => {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    let timer = setInterval(() => {
+    const timer = setInterval(() => {
       setCounter((c) => (c == 3 ? 0 : c + 1));
     }, 200);
     return () => clearInterval(timer);

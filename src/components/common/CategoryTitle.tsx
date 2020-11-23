@@ -1,7 +1,7 @@
-import React from "react";
+import React, {FC} from "react";
 import styled from "styled-components";
 
-const CategoryTitle = ({titleText}: {titleText: string}) => {
+const CategoryTitle: FC<{titleText: string}> = ({titleText}: {titleText: string}) => {
   return <H3Category>{titleText}</H3Category>;
 };
 

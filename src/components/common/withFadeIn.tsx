@@ -1,7 +1,7 @@
-import React from "react";
+import React, {FC} from "react";
 import styled, {css, keyframes} from "styled-components";
 
-const withFadeIn = (component: React.ReactNode) => {
+const withFadeIn: FC<React.ReactNode> = (component: React.ReactNode) => {
   return <FadeInDiv>{component}</FadeInDiv>;
 };
 export default withFadeIn;
@@ -12,8 +12,7 @@ from { opacity: 0; }
 `;
 
 const fadeInRule = css`
-  ${fadeIn} 0.3s linear;
-  background-color: "green";
+  ${fadeIn} 0.2s linear;
 `;
 
 const FadeInDiv = styled.div`

@@ -55,7 +55,7 @@ function* getPokemonsDetails(action: DetailsFetchingAction) {
       3. calls in paralel to fetch the description from each characteristics url
       4. combines descriptions into one and update the store
 */
-function* getDescription(action: DescriptionFetchingAction): any {
+function* getDescription(action: DescriptionFetchingAction) {
   try {
     // 1. call in parallel to fetch the list of characteristics urls from each stat of the Pokemons
     const statCharacteristicsUrls: string[][] = yield all(

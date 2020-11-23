@@ -1,8 +1,8 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 import {device} from "../../utils/cssUtils";
 
-const TitleText = ({text}: {text: string}) => {
+const TitleText: FunctionComponent<{text: string}> = ({text}: {text: string}) => {
   return <H2>{text}</H2>;
 };
 

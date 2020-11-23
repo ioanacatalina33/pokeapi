@@ -1,6 +1,5 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint/eslint-plugin", "prettier"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
@@ -9,13 +8,18 @@
     }
   },
   "env": {
-    "es6": true,
-    "browser": true
+    "es6": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   },
   "extends": [
     "plugin:react/recommended",
     "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "semi": "error",

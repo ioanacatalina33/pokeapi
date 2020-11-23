@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {FunctionComponent, useState} from "react";
 import styled, {css, keyframes} from "styled-components";
 import {
   addDefaultTransition,
@@ -6,13 +6,15 @@ import {
   addTransform,
 } from "../../utils/cssUtils";
 
-const ImgWithPlaceholder = ({
-  imgSrc,
-  width = "100%",
-}: {
+interface ImgPlaceholderProps {
   imgSrc: string | undefined;
   width?: string;
-}) => {
+}
+
+const ImgWithPlaceholder: FunctionComponent<ImgPlaceholderProps> = ({
+  imgSrc,
+  width = "100%",
+}: ImgPlaceholderProps) => {
   const [imgLoaded, isImgLoaded] = useState(false);
 
   const onImgLoad = () => {

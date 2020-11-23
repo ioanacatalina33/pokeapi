@@ -1,8 +1,11 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 import styled from "styled-components";
 import {addDefaultTransition} from "../../utils/cssUtils";
 
-const FadeInImage = (props: any) => {
+/*
+  Waits till image loads and then makes a fadein transition from opacity 0 to 1
+*/
+const FadeInImage: FC<any> = (props: any) => {
   const [imgLoaded, isImgLoaded] = useState(false);
 
   const onImgLoad = () => {

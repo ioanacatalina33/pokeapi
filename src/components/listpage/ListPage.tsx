@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {FunctionComponent, useEffect} from "react";
 import Content from "../common/Content";
 import SearchBar from "./SearchBar";
 import PokemonsList from "./PokemonsList";
@@ -10,7 +10,7 @@ import {setSearchQuery} from "../../store/appstates/actions";
 import {PokemonCardData} from "./PokeCard";
 import LoadingContent from "../common/LoadingContent";
 
-const ListPage = () => {
+const ListPage: FunctionComponent = () => {
   const dispatch = useDispatch();
   const {
     pokemonsFilteredList,
@@ -29,7 +29,9 @@ const ListPage = () => {
     };
   });
 
-  // Detect scroll events to increase the cards display limit
+  /* 
+    Detect scroll events to increase the cards display limit
+  */
   useEffect(() => {
     window.addEventListener("scroll", checkIncrementCardsLimit);
     return () => {
@@ -37,8 +39,10 @@ const ListPage = () => {
     };
   });
 
-  // In case displayLimit reachest the number of pokemons in the original list
-  // the scroll event can be removed
+  /*
+    In case displayLimit reachest the number of pokemons in the original list
+    the scroll event can be removed. Otherwise dispatch action to increment the limit
+  */
   function checkIncrementCardsLimit() {
     if (displayLimit > totalPokemonsNr)
       window.removeEventListener("scroll", checkIncrementCardsLimit);
@@ -47,15 +51,19 @@ const ListPage = () => {
     }
   }
 
-  // When leaving the page the cards display limit is reset and the search query set to ""
+  /*
+    When leaving the page the cards display limit is reset and the search query set to ""
+  */
   useEffect(() => {
     return () => {
       dispatch({type: RESET_CARDS_LIMIT});
       dispatch(setSearchQuery(""));
     };
-  }, []);
+  }, [dispatch]);
 
-  // Maps PokemonData to PokemonDataCard list
+  /*
+    Maps PokemonData to PokemonDataCard list
+  */
   function getCardsShown(): PokemonCardData[] {
     return pokemonsFilteredList.map((pokemon) => {
       return {
@@ -66,8 +74,11 @@ const ListPage = () => {
     });
   }
 
+  /* 
+    Dispatch action to update the query from store
+  */
   function onSearchQuery(query: string) {
-    dispatch(setSearchQuery(query));
+    dispatch(setSearchQuery(query.toLowerCase()));
   }
 
   return (

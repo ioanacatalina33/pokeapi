@@ -1,14 +1,16 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 import {addDefaultTransition, addTransform, colors} from "../../utils/cssUtils";
 
-const PokeButton = ({
-  onClicked,
-  buttonText,
-}: {
+interface PokeButtonProps {
   onClicked: () => void;
   buttonText: string;
-}) => {
+}
+
+const PokeButton: FunctionComponent<PokeButtonProps> = ({
+  onClicked,
+  buttonText,
+}: PokeButtonProps) => {
   function buttonClicked(evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     evt.preventDefault();
     onClicked();
@@ -25,6 +27,7 @@ const Button = styled.button`
   background: transparent;
   text-decoration: none;
   outline: none;
+  margin-bottom: 1rem;
   color: ${colors.primary};
   -webkit-text-stroke-color: ${colors.secondary};
   -webkit-text-stroke-width: 1px;

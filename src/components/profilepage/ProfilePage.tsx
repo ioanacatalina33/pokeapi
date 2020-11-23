@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {FunctionComponent, useEffect} from "react";
 import styled from "styled-components";
 import {addFlexProperties, device} from "../../utils/cssUtils";
 import Content from "../common/Content";
@@ -16,7 +16,7 @@ import ContentDescription from "./ContentDescription";
 import LoadingContent from "../common/LoadingContent";
 import FadeInImage from "../common/FadeInImage";
 
-function PokeProfile() {
+const PokeProfile: FunctionComponent = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -52,8 +52,8 @@ function PokeProfile() {
   };
 
   /*
-    When pokemonData is loaded from the store, check if desciption is set, if not
-    make a call to fetch description.
+    When pokemonData is loaded from the store, check if desciption from
+    a previous call, if not, make the action call to fetch description.
   */
   useEffect(() => {
     if (pokemonData && pokemonData.details && !pokemonData.description) {
@@ -69,33 +69,32 @@ function PokeProfile() {
   return (
     <Content>
       <PokeButton buttonText="< Back" onClicked={onBackClicked} />
-      <TitleText text={pokemonTitle} />
+
       {pokemonData && (
         <LoadingContent
           isLoading={isPokeDataLoading || pokemonData.isDetailsLoading}
           isError={isPokeDataError || pokemonData.isDetailsError}
           errorText="Could not load the Pokemon"
         >
-          {
-            <FlexDiv>
-              <FlexElement>
-                <FadeInImage
-                  src={pokemonData.details ? pokemonData.details.profilePic : ""}
-                  style={{maxWidth: "100%"}}
-                />
-              </FlexElement>
-              <FlexElement>
-                <ContentDetails {...mapPokemonToContentDetails(pokemonData)} />
-              </FlexElement>
-            </FlexDiv>
-          }
+          <TitleText text={pokemonTitle} />
+          <FlexDiv>
+            <FlexElement>
+              <FadeInImage
+                src={pokemonData.details ? pokemonData.details.profilePic : ""}
+                style={{maxWidth: "100%"}}
+              />
+            </FlexElement>
+            <FlexElement>
+              <ContentDetails {...mapPokemonToContentDetails(pokemonData)} />
+            </FlexElement>
+          </FlexDiv>
           <ContentDescription {...pokemonData} />
           {pokemonData.details && <ContentPhotos photos={pokemonData.details.sprites} />}
         </LoadingContent>
       )}
     </Content>
   );
-}
+};
 
 const FlexElement = styled.div`
   ${addFlexProperties("1 0 51%")}

@@ -1,9 +1,9 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {device, colors} from "../../utils/cssUtils";
 
-const Header = () => {
+const Header: FunctionComponent = () => {
   return (
     <Title>
       <TitleText>
@@ -52,7 +52,7 @@ const StyledLink = styled(Link)`
 `;
 
 const TitleText = styled.h1`
-  font-size: 3rem;
+  font-size: 1.8rem;
   text-align: center;
   font-family: "Pokemon Solid", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Oxygen", sans-serif;

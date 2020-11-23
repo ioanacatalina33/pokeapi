@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 import CategoryTitle from "../common/CategoryTitle";
 import LoadingContent from "../common/LoadingContent";
@@ -9,7 +9,7 @@ interface ContentDescriptionProps {
   isDescriptionError: boolean;
 }
 
-const ContentDescription = ({
+const ContentDescription: FunctionComponent<ContentDescriptionProps> = ({
   description,
   isDescriptionLoading,
   isDescriptionError,

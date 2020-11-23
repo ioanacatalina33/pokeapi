@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import {PATH_PROFILE} from "../../utils/Constants";
@@ -18,7 +18,7 @@ export interface PokemonCardData {
   isLoading: boolean;
 }
 
-const PokemonCard = (card: PokemonCardData) => {
+const PokemonCard: FunctionComponent<PokemonCardData> = (card: PokemonCardData) => {
   return (
     <CardDiv>
       <Link

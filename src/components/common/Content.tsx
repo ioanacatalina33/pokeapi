@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 import {device, colors} from "../../utils/cssUtils";
 
@@ -6,7 +6,7 @@ interface ContentProps {
   children?: React.ReactNode;
 }
 
-const Content = (props: ContentProps) => {
+const Content: FunctionComponent<ContentProps> = (props: ContentProps) => {
   return <ContentDiv>{props.children}</ContentDiv>;
 };
 

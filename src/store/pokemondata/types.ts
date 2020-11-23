@@ -19,7 +19,7 @@ export interface PokemonState {
 export interface PokemonData {
   name: string;
   isDetailsLoading: boolean; // true if an action to fetch pokemon details was called
-  isDetailsError: boolean; // true if fetching pokemon details had an error
+  isDetailsError: boolean; // true if there was an error fetching the pokemon
   details?: {
     profilePic: string;
     sprites: PokemonSprites;
@@ -28,7 +28,7 @@ export interface PokemonData {
   };
   description?: string;
   isDescriptionLoading: boolean; // true if an action to fetch description was called
-  isDescriptionError: boolean; // true if fetching pokemon description had an error
+  isDescriptionError: boolean; // true if there was an error fetching the description
 }
 
 export interface Stats {

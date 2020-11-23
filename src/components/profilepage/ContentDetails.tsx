@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 import {colors} from "../../utils/cssUtils";
 import CategoryTitle from "../common/CategoryTitle";
@@ -8,7 +8,10 @@ interface ContentDetailsProps {
   types?: string[];
 }
 
-const ContentDetails = ({stats = [], types = []}: ContentDetailsProps) => {
+const ContentDetails: FunctionComponent<ContentDetailsProps> = ({
+  stats = [],
+  types = [],
+}: ContentDetailsProps) => {
   return (
     <ContentDetailsDiv>
       <CategoryTitle titleText={"Types"} />

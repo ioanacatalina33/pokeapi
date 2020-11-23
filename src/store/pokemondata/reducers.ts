@@ -46,7 +46,7 @@ export function pokemonDataReducer(
     }
     case DETAILS_FETCHING: {
       const pokemonDataObj = action.payload.reduce(
-        (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: any) => {
+        (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: PokemonData) => {
           pokemonDataObj[pokemonData.name] = {
             ...pokemonData,
             isDetailsLoading: true,
@@ -63,7 +63,7 @@ export function pokemonDataReducer(
     }
     case DETAILS_FETCHED: {
       const pokemonDataObj = action.payload.reduce(
-        (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: any) => {
+        (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: PokemonData) => {
           pokemonDataObj[pokemonData.name] = {
             ...pokemonData,
           };
@@ -78,7 +78,7 @@ export function pokemonDataReducer(
     }
     case DETAILS_ERROR: {
       const pokemonDataObj = action.payload.reduce(
-        (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: any) => {
+        (pokemonDataObj: {[key: string]: PokemonData}, pokemonData: PokemonData) => {
           pokemonDataObj[pokemonData.name] = {
             ...pokemonData,
             isDetailsLoading: false,
@@ -116,7 +116,6 @@ export function pokemonDataReducer(
             ...state.pokemons[action.payload.pokemonName],
             description: action.payload.description,
             isDescriptionLoading: false,
-            isDescriptionError: false,
           },
         },
       };

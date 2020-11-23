@@ -17,7 +17,6 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 const store = createStore(rootReducer, applyMiddleware(sagaMiddleware));
 
-// then run the saga
 sagaMiddleware.run(rootSaga);
 
 export {store, rootReducer};

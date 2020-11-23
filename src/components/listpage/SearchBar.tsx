@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {FunctionComponent, useEffect, useState} from "react";
 import styled from "styled-components";
 import {
   device,
@@ -6,22 +6,25 @@ import {
   addDefaultTransition,
   addColorTransparency,
 } from "../../utils/cssUtils";
+import FlexDiv from "../common/FlexDiv";
 
 interface SearchBarProps {
   onSearchQuery: (query: string) => void;
 }
 
-const SearchBar = ({onSearchQuery}: SearchBarProps) => {
-  let [keyPressedTimeout, setKeyPressedTimeout] = useState<number>(0);
+const SearchBar: FunctionComponent<SearchBarProps> = ({
+  onSearchQuery,
+}: SearchBarProps) => {
+  const [keyPressedTimeout, setKeyPressedTimeout] = useState<number>(0);
 
   useEffect(() => {
     if (keyPressedTimeout) return () => clearTimeout(keyPressedTimeout);
-  }, []);
+  }, [keyPressedTimeout]);
 
   /*
-  When value of the search input changes (user presses a key) a timeout is set for each key pressed
-  to detect when user stops from typing. Only when user makes a pause of more than 300ms
-  the callback onSearchQuery is triggered. 
+    When value of the search input changes (user presses a key) a timeout is set for each key pressed
+    to detect when user stops from typing. Only when user makes a pause of more than 300ms
+    the callback onSearchQuery is triggered. 
   */
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -34,13 +37,22 @@ const SearchBar = ({onSearchQuery}: SearchBarProps) => {
   };
 
   return (
-    <CenteredDiv>
+    <FlexDiv>
+      <StyledImg src="./img/imgLoading.png" />
       <StyledInput type="search" placeholder="Search for pokemons" onChange={onChange} />
-    </CenteredDiv>
+    </FlexDiv>
   );
 };
 
 export default SearchBar;
+
+const StyledImg = styled.img`
+  display: none;
+  width: 35px;
+  @media screen and ${device.sm} {
+    display: block;
+  }
+`;
 
 const StyledInput = styled.input`
   ${addDefaultTransition()};
@@ -51,9 +63,11 @@ const StyledInput = styled.input`
   border: 1px solid rgb(0, 0, 0, 0.2);
   border-radius: 5px;
   font-size: 1.2rem;
+  margin: 35px 10px;
   background-color: ${addColorTransparency(colors.secondary, 20)};
   @media screen and ${device.sm} {
     width: 300px;
+    margin: 35px 6px;
   }
   &:hover,
   &:focus {
@@ -61,10 +75,4 @@ const StyledInput = styled.input`
     border: 1px solid ${addColorTransparency(colors.secondary, 60)};
     outline: none;
   }
-`;
-
-const CenteredDiv = styled.div`
-  width: 100%;
-  margin: 30px 1px;
-  text-align: center;
 `;

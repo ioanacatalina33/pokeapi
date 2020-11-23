@@ -1,16 +1,20 @@
-import React from "react";
+import React, {FunctionComponent} from "react";
 import styled from "styled-components";
 import {addFlexProperties, device} from "../../utils/cssUtils";
 import FlexDiv from "../common/FlexDiv";
 import PokemonCard, {PokemonCardData} from "./PokeCard";
 
-const PokemonsList = ({cards}: {cards: PokemonCardData[]}) => {
+const PokemonsList: FunctionComponent<{cards: PokemonCardData[]}> = ({
+  cards,
+}: {
+  cards: PokemonCardData[];
+}) => {
   /* 
     In order to keep the flex layout nice, the remaining space is filled on the last row with empty cards
   */
   function generateEmptyCards() {
-    let emptyElementsToAdd = 4 - (cards.length % 4);
-    let emptyCards = [];
+    const emptyElementsToAdd = 4 - (cards.length % 4);
+    const emptyCards = [];
     for (let i = 0; i < emptyElementsToAdd; i++) {
       emptyCards.push({id: 0, name: "emptycard" + i, img: ""});
     }

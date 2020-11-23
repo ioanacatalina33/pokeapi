@@ -10,7 +10,10 @@ import * as PokeApi from "./api/pokeApi";
 /*
   Calls to get a pokemons list response and maps the response 
 */
-export function fetchPokemons(offset: number, limit: number) {
+export function fetchPokemons(
+  offset: number,
+  limit: number
+): Promise<{[key: string]: PokemonData}> {
   return PokeApi.getPokemons(offset, limit).then((res): {[key: string]: PokemonData} =>
     mapPokemons(res.data)
   );
@@ -20,7 +23,7 @@ export function fetchPokemons(offset: number, limit: number) {
   Calls to get a pokemon and maps the response to a PokemonData.
   In case it fails, returns a PokemonData with isDetailsError set to true
 */
-export function fetchPokemon(pokemonName: string) {
+export function fetchPokemon(pokemonName: string): Promise<PokemonData> {
   return PokeApi.getPokemon(pokemonName)
     .then((res): PokemonData => mapOnePokemon(res.data))
     .catch((e) => {
@@ -38,7 +41,7 @@ export function fetchPokemon(pokemonName: string) {
 /*
   Calls the url provided to get a stat response and retrieves all the caracteristics url strings from the response  
 */
-export function fetchCharacteristicsFromStat(url: string) {
+export function fetchCharacteristicsFromStat(url: string): Promise<string[]> {
   return PokeApi.getFromURL(url).then((res): string[] =>
     mapStatsToCharacteristicsUrl(res.data)
   );
@@ -47,7 +50,10 @@ export function fetchCharacteristicsFromStat(url: string) {
 /*
   Calls the url provided to get a characteristic response and retrieves the description field in one language  
 */
-export function fetchDescriptionFromCharacteristic(url: string, lang: string) {
+export function fetchDescriptionFromCharacteristic(
+  url: string,
+  lang: string
+): Promise<string> {
   return PokeApi.getFromURL(url).then((res): string =>
     mapCharacteristicDescription(res.data, lang)
   );

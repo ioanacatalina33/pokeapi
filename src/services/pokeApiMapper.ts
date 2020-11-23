@@ -1,4 +1,6 @@
 import {PokemonData, Stats} from "../store/pokemondata/types";
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 
 const generateDefaultPokemonData = function (name: string): PokemonData {
   return {
@@ -37,7 +39,7 @@ export function mapOnePokemon(pokemonRes: any): PokemonData {
   });
   const types: string[] = pokemonRes.types.map((statObj: any) => statObj.type.name);
   const profilepic: string = pokemonRes.sprites.other["official-artwork"].front_default;
-  const {other, versions, ...sprites} = pokemonRes.sprites;
+  const {other, versions, ...sprites} = pokemonRes.sprites; // eslint-disable-line
 
   const pokemonData = generateDefaultPokemonData(pokemonRes.name);
   pokemonData.details = {
@@ -48,7 +50,7 @@ export function mapOnePokemon(pokemonRes: any): PokemonData {
   };
 
   // for testing purposes I left one pokemon out
-  if (pokemonRes.name === "slowbro") throw "ew";
+  if (pokemonRes.name === "slowbro") throw "Throwing some error for testing";
 
   return pokemonData;
 }

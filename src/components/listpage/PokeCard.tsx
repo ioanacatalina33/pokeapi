@@ -42,7 +42,7 @@ const CardDiv = styled.div`
   }
   box-shadow: 0px 0px 0px ${addColorTransparency(colors.secondary, 40)};
   border: 1px solid rgb(200, 200, 200, 1);
-  background-color: rgb(255, 255, 255, 0.5);
+  background-color: rgb(255, 255, 255, 0.7);
   border-radius: 5px;
   text-align: center;
   &:hover {

@@ -69,10 +69,14 @@ function* getDescription(action: DescriptionFetchingAction) {
       (urlsTotal: string[], urls: string[]) => (urlsTotal = urlsTotal.concat(urls)),
       []
     );
+    // using only the uniques urls for calls
+    const uniqueURLs = totalCharacteristicsURL.filter(
+      (url, i, self) => self.indexOf(url) === i
+    );
 
     // 3. call in paralel to fetch the description from each characteristics url
     const descriptions = yield all(
-      totalCharacteristicsURL.map((charact) =>
+      uniqueURLs.map((charact) =>
         call(PokeService.fetchDescriptionFromCharacteristic, charact, "en")
       )
     );

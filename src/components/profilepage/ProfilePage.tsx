@@ -56,7 +56,12 @@ const PokeProfile: FunctionComponent = () => {
     a previous call, if not, make the action call to fetch description.
   */
   useEffect(() => {
-    if (pokemonData && pokemonData.details && !pokemonData.description) {
+    if (
+      pokemonData &&
+      pokemonData.details &&
+      !pokemonData.description &&
+      !pokemonData.isDescriptionLoading
+    ) {
       dispatch(
         fetchDescription(
           pokemonData.details.stats.map((stat) => stat.url),

@@ -1,6 +1,7 @@
 /node_modules
 /img_utils
 .env
-
-# production
+package-lock.json
+debug.log
+.vscode
 /build

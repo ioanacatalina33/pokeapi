@@ -117,7 +117,7 @@ function* getDescription(action: DescriptionFetchingAction) {
       getPokemonByName,
       action.pokemonName
     );
-    if (!pokemon || !pokemon.details) {
+    while (!pokemon || !pokemon.details) {
       yield take(DETAILS_FETCHED);
       pokemon = yield select(getPokemonByName, action.pokemonName);
     }

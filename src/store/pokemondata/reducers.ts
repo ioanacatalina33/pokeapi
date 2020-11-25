@@ -4,18 +4,20 @@ import {
   POKEMONS_FETCH_ERROR,
   PokemonState,
   PokemonActionsTypes,
-  DESCRIPTION_FETCHING,
   DESCRIPTION_FETCHTED,
   DESCRIPTION_FETCH_ERROR,
   DETAILS_FETCHING,
   DETAILS_FETCHED,
   DETAILS_ERROR,
   PokemonData,
+  ADD_CHARACTERISTICS_DESC,
+  DESCRIPTION_START_FETCH,
 } from "./types";
 const initialState: PokemonState = {
   pokemons: {},
   isPokemonsListLoading: false,
   isPokemonsListError: false,
+  characteristics: [],
 };
 
 export function pokemonDataReducer(
@@ -50,7 +52,6 @@ export function pokemonDataReducer(
           pokemonDataObj[pokemonData.name] = {
             ...pokemonData,
             isDetailsLoading: true,
-            isDescriptionError: false,
           };
           return pokemonDataObj;
         },
@@ -82,7 +83,7 @@ export function pokemonDataReducer(
           pokemonDataObj[pokemonData.name] = {
             ...pokemonData,
             isDetailsLoading: false,
-            isDescriptionError: true,
+            isDetailsError: true,
           };
           return pokemonDataObj;
         },
@@ -94,13 +95,13 @@ export function pokemonDataReducer(
       };
     }
 
-    case DESCRIPTION_FETCHING: {
+    case DESCRIPTION_START_FETCH: {
       return {
         ...state,
         pokemons: {
           ...state.pokemons,
-          [action.payload.pokemonName]: {
-            ...state.pokemons[action.payload.pokemonName],
+          [action.pokemonName]: {
+            ...state.pokemons[action.pokemonName],
             isDescriptionLoading: true,
             isDescriptionError: false,
           },
@@ -131,6 +132,12 @@ export function pokemonDataReducer(
             isDescriptionError: true,
           },
         },
+      };
+    }
+    case ADD_CHARACTERISTICS_DESC: {
+      return {
+        ...state,
+        characteristics: action.payload,
       };
     }
     default:

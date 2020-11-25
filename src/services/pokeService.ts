@@ -4,7 +4,7 @@ import {
   mapStatsToCharacteristicsUrl,
   mapCharacteristicDescription,
 } from "./pokeApiMapper";
-import {PokemonData} from "../store/pokemondata/types";
+import {CharacteristicsDesc, PokemonData} from "../store/pokemondata/types";
 import * as PokeApi from "./api/pokeApi";
 
 /*
@@ -53,8 +53,8 @@ export function fetchCharacteristicsFromStat(url: string): Promise<string[]> {
 export function fetchDescriptionFromCharacteristic(
   url: string,
   lang: string
-): Promise<string> {
-  return PokeApi.getFromURL(url).then((res): string =>
-    mapCharacteristicDescription(res.data, lang)
+): Promise<CharacteristicsDesc> {
+  return PokeApi.getFromURL(url).then(
+    (res): CharacteristicsDesc => mapCharacteristicDescription(res.data, lang, url)
   );
 }

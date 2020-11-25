@@ -1,33 +1,84 @@
-import React, {FunctionComponent, useEffect} from "react";
+import React, {FunctionComponent, useCallback, useEffect} from "react";
 import Content from "../common/Content";
 import SearchBar from "./SearchBar";
 import PokemonsList from "./PokemonsList";
 import TitleText from "../common/TitleText";
 import {useSelector, useDispatch} from "react-redux";
 import {RootState} from "../../store";
-import {INCREMENT_CARDS_LIMIT, RESET_CARDS_LIMIT} from "../../store/appstates/types";
+import {
+  INCREMENT_CARDS_LIMIT,
+  DEFAULT_LIMIT,
+  RESET_CARDS_LIMIT,
+  LIMIT_INCREMENT,
+} from "../../store/appstates/types";
 import {setSearchQuery} from "../../store/appstates/actions";
 import {PokemonCardData} from "./PokeCard";
 import LoadingContent from "../common/LoadingContent";
+import {getDetails, fetchDetailsWithOffset} from "../../store/pokemondata/actions";
 
 const ListPage: FunctionComponent = () => {
   const dispatch = useDispatch();
   const {
     pokemonsFilteredList,
+    pokemonsFullList,
     isPokemonsListLoading,
     isPokemonsListError,
-    totalPokemonsNr,
     displayLimit,
+    query,
   } = useSelector((state: RootState) => {
     return {
       pokemonsFilteredList: Object.values(state.pokemonStore.pokemons)
         .filter((pokemon) => pokemon.name.includes(state.appStates.query))
         .slice(0, state.appStates.cardsLimit),
       ...state.pokemonStore,
-      totalPokemonsNr: Object.keys(state.pokemonStore.pokemons).length,
+      pokemonsFullList: Object.values(state.pokemonStore.pokemons),
       displayLimit: state.appStates.cardsLimit,
+      query: state.appStates.query,
     };
   });
+
+  useEffect(() => {
+    dispatch(fetchDetailsWithOffset(0, DEFAULT_LIMIT));
+    return () => {
+      dispatch({type: RESET_CARDS_LIMIT});
+      dispatch(setSearchQuery(""));
+    };
+  }, []);
+
+  /*
+    In case displayLimit reachest the maximu number of pokemons the event can be removed. 
+    Otherwise dispatch action to increment the limit and call to fetch the pokemons details. 
+    In case there is a search query, fetch the details from the filtered list. 
+
+    Note: This logic of fetching pokemon details with limit and offset and updating the cards limit
+    could have also been done in an action in saga.
+  */
+  const checkIncrementCardsLimit = useCallback(() => {
+    if (displayLimit > pokemonsFullList.length && pokemonsFullList.length !== 0)
+      window.removeEventListener("scroll", checkIncrementCardsLimit);
+    else if (
+      typeof window !== undefined &&
+      window.innerHeight + scrollY >= document.body.offsetHeight - 200
+    ) {
+      dispatch({type: INCREMENT_CARDS_LIMIT});
+      if (!query || query == "") {
+        dispatch(
+          fetchDetailsWithOffset(
+            pokemonsFilteredList.length,
+            pokemonsFilteredList.length + LIMIT_INCREMENT
+          )
+        );
+      } else {
+        const filteredListToFetch = pokemonsFullList
+          .filter((p) => p.name.includes(query))
+          .slice(
+            pokemonsFilteredList.length,
+            pokemonsFilteredList.length + LIMIT_INCREMENT
+          );
+        dispatch(getDetails(filteredListToFetch));
+      }
+    }
+  }, [displayLimit, pokemonsFullList, pokemonsFilteredList.length, dispatch, query]);
 
   /* 
     Detect scroll events to increase the cards display limit
@@ -37,29 +88,7 @@ const ListPage: FunctionComponent = () => {
     return () => {
       window.removeEventListener("scroll", checkIncrementCardsLimit);
     };
-  });
-
-  /*
-    In case displayLimit reachest the number of pokemons in the original list
-    the scroll event can be removed. Otherwise dispatch action to increment the limit
-  */
-  function checkIncrementCardsLimit() {
-    if (displayLimit > totalPokemonsNr)
-      window.removeEventListener("scroll", checkIncrementCardsLimit);
-    else if (window.innerHeight + scrollY >= document.body.offsetHeight - 200) {
-      dispatch({type: INCREMENT_CARDS_LIMIT});
-    }
-  }
-
-  /*
-    When leaving the page the cards display limit is reset and the search query set to ""
-  */
-  useEffect(() => {
-    return () => {
-      dispatch({type: RESET_CARDS_LIMIT});
-      dispatch(setSearchQuery(""));
-    };
-  }, [dispatch]);
+  }, [checkIncrementCardsLimit]);
 
   /*
     Maps PokemonData to PokemonDataCard list
@@ -76,9 +105,20 @@ const ListPage: FunctionComponent = () => {
 
   /* 
     Dispatch action to update the query from store
+    Fetch details for the first pokemons in the filtered list.
   */
   function onSearchQuery(query: string) {
+    dispatch({type: RESET_CARDS_LIMIT});
     dispatch(setSearchQuery(query.toLowerCase()));
+    if (query !== "") {
+      dispatch(
+        getDetails(
+          pokemonsFullList
+            .filter((poke) => poke.name.includes(query.toLowerCase()))
+            .slice(0, DEFAULT_LIMIT)
+        )
+      );
+    }
   }
 
   return (

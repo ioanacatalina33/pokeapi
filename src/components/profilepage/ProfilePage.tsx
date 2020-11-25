@@ -11,7 +11,7 @@ import ContentPhotos from "./ContentPhotos";
 import {PokemonData} from "../../store/pokemondata/types";
 import {RootState} from "../../store";
 import {useSelector, useDispatch} from "react-redux";
-import {fetchDescription} from "../../store/pokemondata/actions";
+import {fetchDescription, fetchOnePokemonDetails} from "../../store/pokemondata/actions";
 import ContentDescription from "./ContentDescription";
 import LoadingContent from "../common/LoadingContent";
 import FadeInImage from "../common/FadeInImage";
@@ -20,7 +20,6 @@ const PokeProfile: FunctionComponent = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  // Get Pokemon name from the pathname
   const {pathname} = useLocation();
   const pokemonName = pathname.split("/")[2];
   const pokemonTitle = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
@@ -36,6 +35,11 @@ const PokeProfile: FunctionComponent = () => {
     }
   );
 
+  useEffect(() => {
+    dispatch(fetchOnePokemonDetails(pokemonName));
+    dispatch(fetchDescription(pokemonName));
+  }, []);
+
   const onBackClicked = () => {
     return history.push("/");
   };
@@ -50,26 +54,6 @@ const PokeProfile: FunctionComponent = () => {
       types: item.details ? item.details.types : [],
     };
   };
-
-  /*
-    When pokemonData is loaded from the store, check if desciption from
-    a previous call, if not, make the action call to fetch description.
-  */
-  useEffect(() => {
-    if (
-      pokemonData &&
-      pokemonData.details &&
-      !pokemonData.description &&
-      !pokemonData.isDescriptionLoading
-    ) {
-      dispatch(
-        fetchDescription(
-          pokemonData.details.stats.map((stat) => stat.url),
-          pokemonData.name
-        )
-      );
-    }
-  }, [pokemonData, dispatch]);
 
   return (
     <Content>

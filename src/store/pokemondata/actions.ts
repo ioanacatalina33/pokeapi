@@ -28,6 +28,31 @@ export function fetchDetails(pokemons: Types.PokemonData[]): Types.DetailsFetchi
   };
 }
 
+export function fetchDetailsWithOffset(
+  offset: number,
+  limit: number
+): Types.DetailsOffsetLimitAction {
+  return {
+    type: Types.GET_DETAILS_WITH_OFFSET,
+    offset: offset,
+    limit: limit,
+  };
+}
+
+export function fetchOnePokemonDetails(name: string): Types.GetOnePokemonDetailsAction {
+  return {
+    type: Types.GET_DETAILS_ONE_POKEMON,
+    name: name,
+  };
+}
+
+export function getDetails(pokemons: Types.PokemonData[]): Types.getDetailsAction {
+  return {
+    type: Types.GET_DETAILS,
+    payload: pokemons,
+  };
+}
+
 export function detailsFetched(
   pokemons: Types.PokemonData[]
 ): Types.DetailsFetchedAction {
@@ -35,6 +60,12 @@ export function detailsFetched(
     type: Types.DETAILS_FETCHED,
     payload: pokemons,
   };
+}
+
+export function addCharacteristicsDesc(
+  characteristics: Types.CharacteristicsDesc[]
+): Types.AddCharacteristicsDesc {
+  return {type: Types.ADD_CHARACTERISTICS_DESC, payload: characteristics};
 }
 
 export function fetchDetailsError(
@@ -46,16 +77,17 @@ export function fetchDetailsError(
   };
 }
 
-export function fetchDescription(
-  statsUrls: string[],
-  name: string
-): Types.DescriptionFetchingAction {
+export function fetchDescription(name: string): Types.DescriptionFetchingAction {
   return {
     type: Types.DESCRIPTION_FETCHING,
-    payload: {
-      pokemonName: name,
-      statsUrls: statsUrls,
-    },
+    pokemonName: name,
+  };
+}
+
+export function startFetchDescription(name: string): Types.DescriptionStartFetchAction {
+  return {
+    type: Types.DESCRIPTION_START_FETCH,
+    pokemonName: name,
   };
 }
 

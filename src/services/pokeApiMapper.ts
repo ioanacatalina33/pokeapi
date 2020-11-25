@@ -1,4 +1,4 @@
-import {PokemonData, Stats} from "../store/pokemondata/types";
+import {CharacteristicsDesc, PokemonData, Stat} from "../store/pokemondata/types";
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
@@ -29,7 +29,7 @@ export function mapPokemons(resData: any): {[key: string]: PokemonData} {
     Maps the get pokemon details response with the PokemonData
  */
 export function mapOnePokemon(pokemonRes: any): PokemonData {
-  const stats: Stats[] = pokemonRes.stats.map((statObj: any) => {
+  const stats: Stat[] = pokemonRes.stats.map((statObj: any) => {
     return {
       name: statObj.stat.name,
       baseStat: statObj.base_stat,
@@ -67,11 +67,12 @@ export function mapStatsToCharacteristicsUrl(stats: any): string[] {
 */
 export function mapCharacteristicDescription(
   characteristicRes: any,
-  lang: string
-): string {
+  lang: string,
+  url: string
+): CharacteristicsDesc {
   const descriptions: any[] = characteristicRes.descriptions;
   const descriptionLang = descriptions.reduce((finalDesc, desc) => {
     if (desc.language.name === lang) return (finalDesc = desc.description);
   }, "");
-  return descriptionLang;
+  return {url: url, description: descriptionLang};
 }

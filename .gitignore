@@ -1,0 +1,7 @@
+/node_modules
+/img_utils
+.env
+package-lock.json
+debug.log
+.vscode
+/build
